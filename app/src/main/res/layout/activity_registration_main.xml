@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/ic_back2"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+
+
+
+        >
+
+        <TextView
+            android:id="@+id/Registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="Registration"
+            android:typeface="serif"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="32dp" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_open_mail"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:textSize="18dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_lock"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:ems="10"
+            android:hint="First Name"
+            android:inputType="textPersonName"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:ems="10"
+            android:textSize="18dp"
+            android:hint="Last Name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/main_LBL_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="43dp"
+            android:text="Select Date"
+            android:textColor="@color/black"
+
+            android:textSize="18dp"
+
+            />
+
+
+            <Spinner
+                android:id="@+id/main_SPN_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                />
+
+
+
+            <Spinner
+                android:id="@+id/main_SPN_interested"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="40dp"
+
+                android:layout_marginEnd="40dp"
+                />
+
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:textColorHint="@color/black"
+            android:ems="10"
+            android:textSize="18dp"
+            android:hint="Phone Number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/editTextTextPostalAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:ems="10"
+            android:textSize="18dp"
+            android:hint="Address"
+            android:inputType="textPostalAddress" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/main_BTN_next"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#FFE3E7"
+        android:text="Next"
+        android:textColor="@color/black"
+        app:cornerRadius="30dp"
+        app:strokeColor="#FE3B5B"
+        app:strokeWidth="4dp" />
+
+</RelativeLayout>

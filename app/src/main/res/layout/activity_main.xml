@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/ic_back"
+
+
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_LBL_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+
+
+            android:text="Duet"
+            android:textColor="@color/black"
+            android:textSize="45dp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_LBL_listen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:text="Listen to your heart "
+            android:textColor="@color/black"
+            android:textSize="21dp"
+            android:textStyle="bold">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+        <EditText
+            android:id="@+id/main_EDT_username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="15dp"
+            android:drawableRight="@drawable/ic_open_mail"
+
+
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/black"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/main_EDT_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:drawableRight="@drawable/ic_lock"
+            android:hint="Password"
+            android:inputType="textPassword"
+
+            android:textColorHint="@color/black"
+
+            android:textSize="15dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_BTN_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/black"
+            android:padding="12dp"
+            android:text="Login"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_LBL_orLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Or login with"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_BTN_spotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6BCB77"
+            android:text="Spotify"
+            app:icon="@drawable/ic_spotify"
+            app:iconGravity="end"
+            app:iconSize="50dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+
+            android:id="@+id/main_LBL_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Don't have an account? create your account."
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
