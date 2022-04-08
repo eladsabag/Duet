@@ -30,6 +30,7 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
         artists_IMG = new ImageView[]{findViewById(R.id.artists_IMG_artist0), findViewById(R.id.artists_IMG_artist1), findViewById(R.id.artists_IMG_artist2), findViewById(R.id.artists_IMG_artist3), findViewById(R.id.artists_IMG_artist4), findViewById(R.id.artists_IMG_artist5), findViewById(R.id.artists_IMG_artist6), findViewById(R.id.artists_IMG_artist7), findViewById(R.id.artists_IMG_artist8),findViewById(R.id.artists_IMG_artist9)};
         artists_BOX = new CheckBox[]{findViewById(R.id.artists_BOX_artist0), findViewById(R.id.artists_BOX_artist1), findViewById(R.id.artists_BOX_artist2), findViewById(R.id.artists_BOX_artist3), findViewById(R.id.artists_BOX_artist4), findViewById(R.id.artists_BOX_artist5), findViewById(R.id.artists_BOX_artist6), findViewById(R.id.artists_BOX_artist7), findViewById(R.id.artists_BOX_artist8),findViewById(R.id.artists_BOX_artist9)};
         chosenArtists = new ArrayList<>();
+        artists_BTN_next = findViewById(R.id.artists_BTN_next);
         setCheckBoxNames();
 
         artists_BTN_next.setOnClickListener(new View.OnClickListener() {
