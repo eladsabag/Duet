@@ -72,22 +72,17 @@ public class MainActivity extends AppCompatActivity {
         main_LBL_create.setMovementMethod(LinkMovementMethod.getInstance());
         main_LBL_create.setHighlightColor(Color.TRANSPARENT);
 
-
-
-
-
-
         SpannableString ss1=new SpannableString(main_LBL_create.getText());
         ForegroundColorSpan fgcs=new ForegroundColorSpan(Color.RED);
         ss1.setSpan(fgcs,23,main_LBL_create.getText().length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         main_LBL_create.setText(ss1);
 
 
+        main_BTN_spotify.setOnClickListener(view -> spotifyLogin());
 
+    }
 
-
-
-
-
+    private void spotifyLogin() {
+        startActivity(new Intent(MainActivity.this, SpotifyAuthActivity.class));
     }
 }
