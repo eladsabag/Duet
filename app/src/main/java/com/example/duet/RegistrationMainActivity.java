@@ -91,14 +91,35 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                 };
 
                 // TODO -  check what field is empty and pop a message to fill it before continue to next page
-
-                Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
-                intent.putExtra("userDetails",userDetails);
-                startActivity(intent);
-                finish();
+                if(checkIfEmpty()){
+                    Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
+                    intent.putExtra("userDetails",userDetails);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
+    }
+
+    private boolean checkIfEmpty() {
+        boolean isFull = false;
+        if(editTextTextEmailAddress.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+        }else if(editTextTextPassword.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+        }else if(editTextTextPersonName2.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
+        }else if(editTextTextPersonName.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter second name", Toast.LENGTH_SHORT).show();
+        }else if(editTextPhone.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
+        }else if(editTextTextPostalAddress.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter address", Toast.LENGTH_SHORT).show();
+        }else{
+            isFull = true;
+        }
+        return isFull;
     }
 
     private void setSpinner(Spinner spn,String[] arr) {
@@ -172,7 +193,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override

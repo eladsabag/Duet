@@ -6,19 +6,29 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.button.MaterialButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class RegistrationSongsActivity extends AppCompatActivity {
@@ -31,6 +41,8 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private LinearLayout ll1;
     private MaterialButton songs_BTN_finish;
     private ArrayList<String> chosenSongs;
+    private String jsonBody="{\"email\":\"avivit.yehezkel@s.afeka.ac.il\",\"role\":\"PLAYER\",\"avatar\":\"c\",\"username\":\"avivit\"}";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +74,13 @@ public class RegistrationSongsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO -  this button should be disabled if the string array(songs chosen) is smaller than 3
 
-                // this is data from last activiy - RegistrationMainActivity
+                // this is data from last activity - RegistrationMainActivity
                 Intent i = getIntent();
                 String[] userDetails = i.getStringArrayExtra("userDetails");
                 String[] chosenArtists = i.getStringArrayExtra("chosenArtists");
 
                 // TODO - POST REQUEST to backend server in order to sign the user with the details - userDetails, chosenArtists, chosenSongs.
-
+                createNewUser();
 
                 // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
 
@@ -114,5 +126,50 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+
+    private void createNewUser(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/users";
+        StringRequest request = new StringRequest(Request.Method.POST, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                        try {
+                            //response json
+                            JSONObject respObj = new JSONObject(response);
+                            //String name = respObj.getString("name");
+                            //String job = respObj.getString("job");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(RegistrationSongsActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Log.d("ccc",""+error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return jsonBody == null ? null : jsonBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+        queue.add(request);
     }
 }
