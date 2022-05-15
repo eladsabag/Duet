@@ -8,7 +8,7 @@
     android:background="@drawable/ic_back"
 
 
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
 
     <LinearLayout

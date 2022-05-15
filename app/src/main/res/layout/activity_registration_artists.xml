@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_back2"
-    tools:context=".RegistrationArtistsActivity">
+    tools:context=".activities.RegistrationArtistsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

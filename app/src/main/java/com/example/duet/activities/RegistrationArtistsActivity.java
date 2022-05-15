@@ -1,7 +1,6 @@
-package com.example.duet;
+package com.example.duet.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -9,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.duet.R;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;

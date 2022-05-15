@@ -1,4 +1,4 @@
-package com.example.duet;
+package com.example.duet.data;
 
 public class Chat {
     private String name;

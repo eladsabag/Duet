@@ -1,4 +1,4 @@
-package com.example.duet;
+package com.example.duet.activities;
 
 
 
@@ -22,9 +22,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.duet.R;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -91,12 +91,12 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                 };
 
                 // TODO -  check what field is empty and pop a message to fill it before continue to next page
-                if(checkIfEmpty()){
+                //if(checkIfEmpty()){
                     Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
                     intent.putExtra("userDetails",userDetails);
                     startActivity(intent);
                     finish();
-                }
+                //}
             }
         });
 

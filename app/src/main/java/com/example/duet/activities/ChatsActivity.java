@@ -1,14 +1,16 @@
-package com.example.duet;
+package com.example.duet.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.duet.data.Chat;
+import com.example.duet.ChatAdapter;
+import com.example.duet.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -33,10 +35,10 @@ public class ChatsActivity extends AppCompatActivity {
         chats.add(new Chat());
         chats.add(new Chat());
         chats.add(new Chat());
-        ChatAdapter liqueurAdapter = new ChatAdapter(this, chats);
+        ChatAdapter chatAdapter = new ChatAdapter(this, chats);
         chats_LST_chats.setLayoutManager(new LinearLayoutManager(this));
         chats_LST_chats.setHasFixedSize(true);
-        chats_LST_chats.setAdapter(liqueurAdapter);
+        chats_LST_chats.setAdapter(chatAdapter);
     }
 
     private void initNavigation() {

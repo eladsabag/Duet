@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.duet.data.Chat;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
