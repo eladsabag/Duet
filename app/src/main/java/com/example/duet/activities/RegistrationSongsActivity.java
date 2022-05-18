@@ -102,9 +102,9 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
                 // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
 
-//                Intent intent = new Intent(RegistrationSongsActivity.this, AppPage.class);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

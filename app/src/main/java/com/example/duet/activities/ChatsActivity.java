@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.duet.data.Chat;
 import com.example.duet.ChatAdapter;
@@ -26,6 +28,9 @@ public class ChatsActivity extends AppCompatActivity {
         chats_LST_chats = findViewById(R.id.chats_LST_chats);
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.chats);
+        bottomNavigationView.setItemIconSize(70);
+
+
 
         initNavigation();
 
@@ -35,6 +40,10 @@ public class ChatsActivity extends AppCompatActivity {
         chats.add(new Chat());
         chats.add(new Chat());
         chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+
+
         ChatAdapter chatAdapter = new ChatAdapter(this, chats);
         chats_LST_chats.setLayoutManager(new LinearLayoutManager(this));
         chats_LST_chats.setHasFixedSize(true);
@@ -51,7 +60,7 @@ public class ChatsActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         //move to home activity
-                        //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(),MatchActivity.class));
                         //overridePendingTransition(0,0);
                         return true;
 
@@ -61,7 +70,7 @@ public class ChatsActivity extends AppCompatActivity {
 
                     case R.id.person:
                         //move to profile activity
-                        //startActivity(new Intent(getApplicationContext(),About.class));
+                        startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
                         //overridePendingTransition(0,0);
                         return true;
 

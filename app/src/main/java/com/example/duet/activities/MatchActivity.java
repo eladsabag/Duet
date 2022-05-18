@@ -1,9 +1,9 @@
 package com.example.duet.activities;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,51 +11,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.duet.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textview.MaterialTextView;
 
-public class ProfileActivity extends AppCompatActivity {
-    private TextView profile_TXT_likes, profile_TXT_matches, profile_TXT_photos, profile_TXT_interests, profile_TXT_bio;
+public class MatchActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
+    private MaterialTextView match_LBL_profile;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        findViews();
-        initNavigation();
-    }
-
-    private void findViews() {
-        profile_TXT_likes = findViewById(R.id.profile_TXT_likes);
-        profile_TXT_matches = findViewById(R.id.profile_TXT_matches);
-        profile_TXT_photos = findViewById(R.id.profile_TXT_photos);
-        profile_TXT_interests = findViewById(R.id.profile_TXT_interests);
-        profile_TXT_bio = findViewById(R.id.profile_TXT_bio);
+        setContentView(R.layout.activity_match);
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setItemIconSize(70);
-        bottomNavigationView.setSelectedItemId(R.id.person);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        match_LBL_profile= findViewById(R.id.match_LBL_profile);
+
+        match_LBL_profile.setPaintFlags(match_LBL_profile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+
+
+        initNavigation();
+
+
+
     }
+
+
     private void initNavigation() {
+        // Perform item selected listener
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId())
                 {
                     case R.id.home:
-                        //move to profile home
-                        startActivity(new Intent(getApplicationContext(),MatchActivity.class));
-
+                        //stay in this activity
                         return true;
 
                     case R.id.chats:
                         //move to chat activity
                         startActivity(new Intent(getApplicationContext(),ChatsActivity.class));
-
                         //overridePendingTransition(0,0);
                         return true;
 
                     case R.id.person:
-                        //stay in this activity
+                        //move to profile activity
+                        startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
                         //overridePendingTransition(0,0);
                         return true;
 
@@ -65,7 +68,4 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 }

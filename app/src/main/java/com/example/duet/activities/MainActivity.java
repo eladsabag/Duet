@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View textView) {
                 startActivity(new Intent(MainActivity.this, RegistrationMainActivity.class));
-                finish();
             }
             @Override
             public void updateDrawState(TextPaint ds) {

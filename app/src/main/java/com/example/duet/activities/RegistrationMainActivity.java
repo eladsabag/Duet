@@ -80,22 +80,21 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
             public void onClick(View view) {
                 // collect all data and send it to the next page
                 String[] userDetails = {
-                  editTextTextEmailAddress.getText().toString(),
-                  editTextTextPassword.getText().toString(),
-                  editTextTextPersonName2.getText().toString(),
-                  editTextTextPersonName.getText().toString(),
-                  main_LBL_date.getText().toString(),
-                  main_SPN_gender.toString(),
-                  editTextPhone.getText().toString(),
-                  editTextTextPostalAddress.getText().toString()
+                        editTextTextEmailAddress.getText().toString(),
+                        editTextTextPassword.getText().toString(),
+                        editTextTextPersonName2.getText().toString(),
+                        editTextTextPersonName.getText().toString(),
+                        main_LBL_date.getText().toString(),
+                        main_SPN_gender.toString(),
+                        editTextPhone.getText().toString(),
+                        editTextTextPostalAddress.getText().toString()
                 };
 
                 // TODO -  check what field is empty and pop a message to fill it before continue to next page
                 //if(checkIfEmpty()){
-                    Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
-                    intent.putExtra("userDetails",userDetails);
-                    startActivity(intent);
-                    finish();
+                Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
+                intent.putExtra("userDetails",userDetails);
+                startActivity(intent);
                 //}
             }
         });

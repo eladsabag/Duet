@@ -49,7 +49,7 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
                 intent.putExtra("chosenArtists",chosenArtists);
 
                 startActivity(intent);
-                finish();
+
             }
         });
     }
