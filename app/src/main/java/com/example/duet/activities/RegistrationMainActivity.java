@@ -2,10 +2,6 @@ package com.example.duet.activities;
 
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,10 +18,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.Map;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private TextView mDisplayDate,Registration,editTextTextEmailAddress,editTextTextPassword,editTextTextPersonName2,editTextTextPersonName,main_LBL_date;
@@ -37,6 +49,9 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
     private EditText editTextPhone,editTextTextPostalAddress;
     private Typeface type2;
     private MaterialButton main_BTN_next;
+    private MaterialTextView error;
+
+    private boolean isExist = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +85,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
         editTextPhone.setTypeface(type2);
         editTextTextPostalAddress.setTypeface(type2);
 
+        error = findViewById(R.id.error);
 
         setDatePicker();
         setSpinner(main_SPN_gender,gender);
@@ -90,16 +106,50 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                         editTextTextPostalAddress.getText().toString()
                 };
 
-                // TODO -  check what field is empty and pop a message to fill it before continue to next page
-                //if(checkIfEmpty()){
-                Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
-                intent.putExtra("userDetails",userDetails);
-                startActivity(intent);
-                //}
+                getUser();
+
+                if(isExist) {
+                    Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
+                    intent.putExtra("userDetails",userDetails);
+                    startActivity(intent);
+                } else {
+                    error.setVisibility(View.VISIBLE);
+                }
             }
         });
 
     }
+
+    private void getUser(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei" + editTextTextEmailAddress.getText().toString();
+        StringRequest request = new StringRequest(Request.Method.GET, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        try {
+                            //response json
+                            JSONObject respObj = new JSONObject(response);
+
+                            isExist = true;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) { }
+                }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+        queue.add(request);
+    }
+
 
     private boolean checkIfEmpty() {
         boolean isFull = false;

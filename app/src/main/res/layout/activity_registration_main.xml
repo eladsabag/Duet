@@ -155,7 +155,21 @@
 
         </ScrollView>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_error"
+            android:text="User email exists on system. Try again!"
+            android:textColor="#FF0000"
+            android:textSize="15sp"
+            android:visibility="invisible"/>
+
     </LinearLayout>
+
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/main_BTN_next"
