@@ -49,6 +49,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private User user;
     private Song song;
     private String jsonBody;
+    private String jsonDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,27 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         user.setAvatar("img");
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
+        Log.d("ccc","jsonbody = "+jsonBody);
+        //userDetails
+        jsonDetails="{\n" +
+                "    \"name\":\""+userDetails[0]+"\",\n" +
+                "    \"type\":\"profile\",\n" +
+                "    \"createdBy\":{\n" +
+                "        \"userId\":{\n" +
+                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"instanceAttributes\":{\n" +
+                "        \"firstname\":\""+userDetails[2]+"\",\n" +
+                "        \"lastname\":\""+userDetails[3]+"\",\n" +
+                "        \"birthdate\":\""+userDetails[4]+"\",\n" +
+                "        \"gender\":\""+userDetails[5]+"\",\n" +
+                "        \"interestedin\":\""+userDetails[6]+"\",\n" +
+                "        \"occupation\":\""+userDetails[7]+"\"\n" +
+                "    }\n" +
+                "\n" +
+                "}";
 
         songs_LBL_trackName = findViewById(R.id.songs_LBL_trackName);
         songs_LBL_artistName = findViewById(R.id.songs_LBL_artistName);
@@ -99,7 +121,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
                 // TODO - POST REQUEST to backend server in order to sign the user with the details - userDetails, chosenArtists, chosenSongs.
                 createNewUser();
-
+                createUserDetails();
                 // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
 
                 Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
@@ -138,13 +160,10 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // on below line we are displaying a success toast message.
-                        Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            //String name = respObj.getString("name");
-                            //String job = respObj.getString("job");
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -153,8 +172,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                //TODO:tell the user if email already in the system
-                Toast.makeText(RegistrationSongsActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationSongsActivity.this, "user create = " + error, Toast.LENGTH_SHORT).show();
                 Log.d("ccc",""+error);
             }
         }) {
@@ -174,4 +192,52 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         };
         queue.add(request);
     }
+
+    private void createUserDetails(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        StringRequest request = new StringRequest(Request.Method.POST, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                        try {
+                            //response json
+                            JSONObject respObj = new JSONObject(response);
+                            Log.d("ccc",""+respObj.toString());
+
+                        } catch (JSONException e) {
+                            Log.d("ccc",""+e.toString());
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                //TODO:tell the user if email already in the system
+                Toast.makeText(RegistrationSongsActivity.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
+                Log.d("ccc",""+error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return jsonDetails == null ? null : jsonDetails.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", jsonDetails, "utf-8");
+                    return null;
+                }
+            }
+        };
+        queue.add(request);
+    }
+
+
+
 }

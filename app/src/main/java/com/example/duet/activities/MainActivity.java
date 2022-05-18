@@ -10,6 +10,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -98,13 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
         main_BTN_login.setOnClickListener(e -> {
             getUser();
-            if(isExist) {
-                Intent intent = new Intent(MainActivity.this, MatchActivity.class);
-                intent.putExtra("email",main_EDT_username.getText().toString());
-                startActivity(intent);
-            } else {
-                main_LBL_error.setVisibility(View.VISIBLE);
-            }
         });
 
     }
@@ -120,14 +114,18 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            isExist = true;
+                            Intent intent = new Intent(MainActivity.this, MatchActivity.class);
+                            intent.putExtra("email",main_EDT_username.getText().toString());
+                            startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) { isExist = false; }
+            public void onErrorResponse(VolleyError error) {
+                main_LBL_error.setVisibility(View.VISIBLE);
+                }
         }) {
             @Nullable
             @Override
@@ -140,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void spotifyLogin() {
-        startActivity(new Intent(MainActivity.this, SpotifyAuthActivity.class));
+        Intent intent = new Intent(MainActivity.this, SpotifyAuthActivity.class);
+        intent.putExtra("spotify",true);
+        startActivity(intent);
     }
 }

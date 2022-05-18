@@ -59,7 +59,7 @@ public class SpotifyAuthActivity extends AppCompatActivity {
             switch (response.getType()) {
                 // Response was successful and contains auth token
                 case TOKEN:
-                    editor = getSharedPreferences("SPOTIFY", 0).edit();
+                    editor = getSharedPreferences("SP_FILE", 0).edit();
                     editor.putString("token", response.getAccessToken());
                     Log.d("STARTING", "GOT AUTH TOKEN");
                     editor.apply();
@@ -92,7 +92,8 @@ public class SpotifyAuthActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent newintent = new Intent(SpotifyAuthActivity.this, RegistrationArtistsActivity.class);
+        Intent newintent = new Intent(SpotifyAuthActivity.this, MatchActivity.class);
+        newintent.putExtra("spotify",getIntent().getBooleanExtra("spotify",true));
         startActivity(newintent);
     }
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,7 +41,7 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private TextView mDisplayDate,Registration,editTextTextEmailAddress,editTextTextPassword,editTextTextPersonName2,editTextTextPersonName,main_LBL_date;
+    private TextView mDisplayDate,Registration,editTextTextEmailAddress,editTextTextPassword,editTextTextPersonName2,editTextTextPersonName,main_LBL_date,main_EDT_occupation;
     private Spinner main_SPN_gender;
     private Spinner main_SPN_interested;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -71,6 +72,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
         main_LBL_date=(TextView) findViewById(R.id.main_LBL_date);
         editTextPhone=findViewById(R.id.editTextPhone);
         editTextTextPostalAddress=findViewById(R.id.editTextTextPostalAddress);
+        main_EDT_occupation=findViewById(R.id.main_EDT_occupation);
         main_BTN_next = findViewById(R.id.main_BTN_next);
 
 
@@ -101,14 +103,14 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                         editTextTextPersonName2.getText().toString(),
                         editTextTextPersonName.getText().toString(),
                         main_LBL_date.getText().toString(),
-                        main_SPN_gender.toString(),
-                        editTextPhone.getText().toString(),
-                        editTextTextPostalAddress.getText().toString()
+                        main_SPN_gender.getSelectedItem().toString(),
+                        main_SPN_interested.getSelectedItem().toString(),
+                        main_EDT_occupation.getText().toString()
                 };
 
                 getUser();
 
-                if(isExist) {
+                if(!isExist) {
                     Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
                     intent.putExtra("userDetails",userDetails);
                     startActivity(intent);
@@ -131,7 +133,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-
                             isExist = true;
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,7 +140,8 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                     }
                 }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) { isExist = false; }
+                    public void onErrorResponse(VolleyError error) {
+                        isExist = false; }
                 }) {
             @Nullable
             @Override

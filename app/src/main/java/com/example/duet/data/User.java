@@ -56,6 +56,16 @@ public class User {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
     public static class userJsonSerializer implements JsonSerializer<User> {
 
         @Override
