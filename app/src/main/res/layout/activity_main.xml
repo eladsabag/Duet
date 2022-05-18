@@ -76,6 +76,7 @@
 
             android:textSize="15dp" />
 
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/main_BTN_login"
             android:layout_width="wrap_content"
@@ -117,6 +118,18 @@
             android:padding="8dp"
             android:text="Don't have an account? create your account."
             android:textSize="12dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/main_LBL_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_error"
+            android:text="Wrong details. Please try again!"
+            android:textColor="#FF0000"
+            android:textSize="15sp"
+            android:visibility="invisible"/>
 
 
     </LinearLayout>

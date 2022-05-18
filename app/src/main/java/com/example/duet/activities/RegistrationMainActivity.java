@@ -122,7 +122,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei" + editTextTextEmailAddress.getText().toString();
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + editTextTextEmailAddress.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -139,7 +139,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                     }
                 }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) { }
+                    public void onErrorResponse(VolleyError error) { isExist = false; }
                 }) {
             @Nullable
             @Override
