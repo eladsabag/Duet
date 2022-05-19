@@ -44,36 +44,42 @@ public class MatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        findViews();
+        //isSpotify = getIntent().getBooleanExtra("spotify",false);
+
+        email = getIntent().getStringExtra("email");
+
+//      getSpotifyUser();
+        getUser();
+        initNavigation();
+    }
+
+    private void findViews() {
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setItemIconSize(70);
         bottomNavigationView.setSelectedItemId(R.id.home);
         match_LBL_profile= findViewById(R.id.match_LBL_profile);
-
         match_LBL_profile.setPaintFlags(match_LBL_profile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        email = getIntent().getStringExtra("email");
-        isSpotify = getIntent().getBooleanExtra("spotify",false);
-        if(isSpotify){
-            getSpotifyUser();
-        }else {
-            getUser();
-        }
-        //getUserDetails();
-
-        initNavigation();
-
 
 
     }
 
-    private void getSpotifyUser() {
+
+//    private void getSpotifyUser() {
 //        String ENDPOINT = "https://api.spotify.com/v1/me";
 //        RequestQueue mqueue = Volley.newRequestQueue(this);
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(ENDPOINT, null, response -> {
-//            Gson gson = new Gson();
-//            user = gson.fromJson(response.toString(), User.class);
-//        }, error -> get(() -> {
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
+//            try {
+//                email=response.getString("email");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }, new Response.ErrorListener(){
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//            }
+//        }) {
 //
-//        })) {
 //            @Override
 //            public Map<String, String> getHeaders() throws AuthFailureError {
 //                Map<String, String> headers = new HashMap<>();
@@ -84,12 +90,12 @@ public class MatchActivity extends AppCompatActivity {
 //            }
 //        };
 //        mqueue.add(jsonObjectRequest);
-    }
+//    }
 
 
     private void getUser() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        String endpoint = "http://192.168.0.103:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
         //Log.d("ccc","email = " + email);
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -145,6 +151,7 @@ public class MatchActivity extends AppCompatActivity {
                         //move to profile activity
                         Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
                         profile.putExtra("email",email);
+                        profile.putExtra("spotify",isSpotify);
                         startActivity(profile);
                         //overridePendingTransition(0,0);
                         return true;

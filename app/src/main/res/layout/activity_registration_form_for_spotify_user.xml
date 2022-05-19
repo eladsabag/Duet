@@ -8,6 +8,7 @@
     android:background="@drawable/ic_back2"
     tools:context=".activities.MainActivity">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,8 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="55dp"
-            android:layout_marginEnd="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -24,62 +25,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:text="Registration"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="80dp"
+                android:gravity="center_horizontal"
+                android:text="Enter more Registration details"
                 android:textColor="@color/black"
-                android:textSize="32dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 android:typeface="serif" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/black"
-                app:helperText="Required*"
-                app:helperTextTextColor="@color/red">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawableRight="@drawable/ic_open_mail"
-                    android:ems="10"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="@color/black"
-                    android:textSize="18dp" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/black"
-                app:helperTextTextColor="@color/black">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextTextPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawableRight="@drawable/ic_lock"
-                    android:ems="10"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColorHint="@color/black"
-                    android:textSize="18dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -99,6 +60,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -118,8 +81,9 @@
                 android:id="@+id/main_LBL_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Select Birth Date"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -131,20 +95,27 @@
                 android:id="@+id/main_SPN_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-3dp" />
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="10dp"/>
 
 
             <Spinner
                 android:id="@+id/main_SPN_interested"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-3dp" />
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="25dp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -166,10 +137,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
                     app:boxStrokeColor="@color/black"
                     app:helperTextTextColor="@color/black">
 
@@ -192,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
                 android:drawableStart="@drawable/ic_error"
                 android:text="User email exists on system. Try again!"
                 android:textColor="#FF0000"
@@ -202,10 +176,8 @@
         </LinearLayout>
     </ScrollView>
 
-
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/main_BTN_next"
+        android:id="@+id/main_BTN_finish"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -213,11 +185,10 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
         android:backgroundTint="#FFE3E7"
-        android:text="Next"
+        android:text="Finish"
         android:textColor="@color/black"
         app:cornerRadius="30dp"
         app:strokeColor="#FE3B5B"
         app:strokeWidth="4dp" />
-
 
 </RelativeLayout>

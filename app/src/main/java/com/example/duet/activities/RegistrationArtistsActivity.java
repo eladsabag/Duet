@@ -16,17 +16,17 @@ import java.util.ArrayList;
 public class RegistrationArtistsActivity extends AppCompatActivity {
     // fake data - random top 10 artists
     private String[] artists = {"Drake","Maluma","Ariana Grande","Beyonce","Kendrick Lemar","Arctic Monkey's","Bad Bunny","Ravid Plotink","Noa Kirel","Omer Adam"};
-
     private ImageView[] artists_IMG;
     private CheckBox[] artists_BOX;
-
     private ArrayList<String> chosenArtists;
     private MaterialButton artists_BTN_next;
+    private String[] userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_artists);
+
         artists_IMG = new ImageView[]{findViewById(R.id.artists_IMG_artist0), findViewById(R.id.artists_IMG_artist1), findViewById(R.id.artists_IMG_artist2), findViewById(R.id.artists_IMG_artist3), findViewById(R.id.artists_IMG_artist4), findViewById(R.id.artists_IMG_artist5), findViewById(R.id.artists_IMG_artist6), findViewById(R.id.artists_IMG_artist7), findViewById(R.id.artists_IMG_artist8),findViewById(R.id.artists_IMG_artist9)};
         artists_BOX = new CheckBox[]{findViewById(R.id.artists_BOX_artist0), findViewById(R.id.artists_BOX_artist1), findViewById(R.id.artists_BOX_artist2), findViewById(R.id.artists_BOX_artist3), findViewById(R.id.artists_BOX_artist4), findViewById(R.id.artists_BOX_artist5), findViewById(R.id.artists_BOX_artist6), findViewById(R.id.artists_BOX_artist7), findViewById(R.id.artists_BOX_artist8),findViewById(R.id.artists_BOX_artist9)};
         chosenArtists = new ArrayList<>();
@@ -40,14 +40,12 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
 
                 // this is data from last activiy - RegistrationMainActivity
                 Intent i = getIntent();
-                String[] userDetails = i.getStringArrayExtra("userDetails");
-
+                userDetails = i.getStringArrayExtra("userDetails");
                 Intent intent = new Intent(RegistrationArtistsActivity.this, RegistrationSongsActivity.class);
 
                 // send all data to next page
                 intent.putExtra("userDetails",userDetails);
                 intent.putExtra("chosenArtists",chosenArtists);
-
                 startActivity(intent);
 
             }
@@ -56,7 +54,6 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
 
     private void setCheckBoxNames() {
         // TODO - Replace fake data with data from GET REQUEST to Spotify API for the top 10 artists worldwide right now.
-
         // always 10 artists
         for (int i = 0; i < 10; i++)
             artists_BOX[i].setText(artists[i]);

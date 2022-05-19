@@ -50,47 +50,43 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private Song song;
     private String jsonBody;
     private String jsonDetails;
+    private String []userDetails;
+    private String[] chosenArtists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_songs);
-        String[] userDetails = getIntent().getStringArrayExtra("userDetails");
-        //make user
-        user = new User();
-        user.setEmail(userDetails[0]);
-        user.setUsername(userDetails[2]);
-        user.setAvatar("img");
-        Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
-        jsonBody = gson.toJson(user);
-        Log.d("ccc","jsonbody = "+jsonBody);
-        //userDetails
-        jsonDetails="{\n" +
-                "    \"name\":\""+userDetails[0]+"\",\n" +
-                "    \"type\":\"profile\",\n" +
-                "    \"createdBy\":{\n" +
-                "        \"userId\":{\n" +
-                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
-                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
-                "        }\n" +
-                "    },\n" +
-                "    \"instanceAttributes\":{\n" +
-                "        \"firstname\":\""+userDetails[2]+"\",\n" +
-                "        \"lastname\":\""+userDetails[3]+"\",\n" +
-                "        \"birthdate\":\""+userDetails[4]+"\",\n" +
-                "        \"gender\":\""+userDetails[5]+"\",\n" +
-                "        \"interestedin\":\""+userDetails[6]+"\",\n" +
-                "        \"occupation\":\""+userDetails[7]+"\"\n" +
-                "    }\n" +
-                "\n" +
-                "}";
+        userDetails = getIntent().getStringArrayExtra("userDetails");
+        chosenArtists = getIntent().getStringArrayExtra("chosenArtists");
+        findViews();
+        makeSong();
+        makeUser();
 
-        songs_LBL_trackName = findViewById(R.id.songs_LBL_trackName);
-        songs_LBL_artistName = findViewById(R.id.songs_LBL_artistName);
-        songs_LST_songs = findViewById(R.id.songs_LST_songs);
-        //checkBox = findViewById(R.id.checkBox);
-        songs_IMG_image = findViewById(R.id.songs_IMG_image);
-        //make song
+
+
+
+        // TODO -  GET REQUEST to Spotify API for the top 10 songs worldwide right now.
+
+        songs_BTN_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO -  this button should be disabled if the string array(songs chosen) is smaller than 1
+
+                // this is data from last activity - RegistrationMainActivity
+                //createNewUser();
+                //createUserDetails();
+                // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
+
+                Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+
+    private void makeSong() {
         song = new Song();
         song.setSong("Envolver");
         song.setArtist("Anitta");
@@ -102,34 +98,50 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         songs_LST_songs.setLayoutManager(new LinearLayoutManager(this));
         songs_LST_songs.setHasFixedSize(true);
         songs_LST_songs.setAdapter(songAdapter);
-
         //checkBox = findViewById(R.id.checkBox);
         //chosenSongs = new ArrayList<>();
+    }
+
+    private void findViews() {
+        songs_LBL_trackName = findViewById(R.id.songs_LBL_trackName);
+        songs_LBL_artistName = findViewById(R.id.songs_LBL_artistName);
+        songs_LST_songs = findViewById(R.id.songs_LST_songs);
+        //checkBox = findViewById(R.id.checkBox);
+        songs_IMG_image = findViewById(R.id.songs_IMG_image);
         songs_BTN_finish = findViewById(R.id.songs_BTN_finish);
 
-        // TODO -  GET REQUEST to Spotify API for the top 10 songs worldwide right now.
+    }
 
-        songs_BTN_finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO -  this button should be disabled if the string array(songs chosen) is smaller than 1
+    private void makeUser() {
+        user = new User();
+        user.setEmail(userDetails[0]);
+        user.setUsername(userDetails[2]);
+        user.setAvatar("img");
+        Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
+        jsonBody = gson.toJson(user);
 
-                // this is data from last activity - RegistrationMainActivity
-                Intent i = getIntent();
-                String[] userDetails = i.getStringArrayExtra("userDetails");
-                String[] chosenArtists = i.getStringArrayExtra("chosenArtists");
-
-                // TODO - POST REQUEST to backend server in order to sign the user with the details - userDetails, chosenArtists, chosenSongs.
-                createNewUser();
-                createUserDetails();
-                // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
-
-                Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
+        jsonDetails="{\n" +
+                "    \"name\":\""+userDetails[0]+"\",\n" +
+                "    \"type\":\"profile\",\n" +
+                "    \"createdBy\":{\n" +
+                "        \"userId\":{\n" +
+                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"instanceAttributes\":{\n" +
+                "        \"firstname\":\""+userDetails[1]+"\",\n" +
+                "        \"lastname\":\""+userDetails[2]+"\",\n" +
+                "        \"birthdate\":\""+userDetails[3]+"\",\n" +
+                "        \"gender\":\""+userDetails[4]+"\",\n" +
+                "        \"interestedin\":\""+userDetails[5]+"\",\n" +
+                "        \"occupation\":\""+userDetails[6]+"\"\n" +
+                "        \"bio\":\""+userDetails[7]+"\"\n" +
+                "        \"chosenArtists\":\""+chosenArtists+"\"\n" +
+                "        \"chosenArtists\":\""+song.toString()+"\"\n" +
+                "    }\n" +
+                "\n" +
+                "}";
     }
 
 //    public void onCheckboxClicked(View view) {
@@ -154,7 +166,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users";
+        String endpoint = "http://192.168.0.103:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -195,7 +207,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        String endpoint = "http://192.168.0.103:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

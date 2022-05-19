@@ -8,13 +8,11 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,54 +39,22 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private TextView mDisplayDate,Registration,editTextTextEmailAddress,editTextTextPassword,editTextTextPersonName2,editTextTextPersonName,main_LBL_date,main_EDT_occupation;
+    private TextInputEditText editTextEmail, editTextFirstName, editTextLastName, editTextOccupation,editBio;
     private Spinner main_SPN_gender;
     private Spinner main_SPN_interested;
+    private TextView main_LBL_date,Registration,error;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String[] gender = {"Gender","Female","Male","Other"};
     private String[] interested = {"Interested In","Female","Male","Other"};
-    private EditText editTextPhone,editTextTextPostalAddress;
     private Typeface type2;
     private MaterialButton main_BTN_next;
-    private MaterialTextView error;
-
     private boolean isExist = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_main);
-
-        main_SPN_gender = findViewById(R.id.main_SPN_gender);
-        main_SPN_gender.setOnItemSelectedListener(this);
-        main_SPN_interested = findViewById(R.id.main_SPN_interested);
-        main_SPN_interested.setOnItemSelectedListener(this);
-        mDisplayDate = (TextView) findViewById(R.id.main_LBL_date);
-        Registration=(TextView) findViewById(R.id.Registration);
-
-        editTextTextEmailAddress=(TextView) findViewById(R.id.editTextTextEmailAddress);
-        editTextTextPassword=(TextView) findViewById(R.id.editTextTextPassword);
-        editTextTextPersonName2=(TextView) findViewById(R.id.editTextTextPersonName2);
-        editTextTextPersonName=(TextView) findViewById(R.id.editTextTextPersonName);
-        main_LBL_date=(TextView) findViewById(R.id.main_LBL_date);
-        editTextPhone=findViewById(R.id.editTextPhone);
-        editTextTextPostalAddress=findViewById(R.id.editTextTextPostalAddress);
-        main_EDT_occupation=findViewById(R.id.main_EDT_occupation);
-        main_BTN_next = findViewById(R.id.main_BTN_next);
-
-
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Momcake-Bold.otf");
-        type2 = Typeface.createFromAsset(getAssets(),"fonts/Rounded.ttf");
-        //Registration.setTypeface(type);
-        editTextTextEmailAddress.setTypeface(type2);
-        editTextTextPassword.setTypeface(type2);
-        editTextTextPersonName2.setTypeface(type2);
-        editTextTextPersonName.setTypeface(type2);
-        main_LBL_date.setTypeface(type2);
-        editTextPhone.setTypeface(type2);
-        editTextTextPostalAddress.setTypeface(type2);
-
-        error = findViewById(R.id.error);
-
+        findViews();
+        setFonts();
         setDatePicker();
         setSpinner(main_SPN_gender,gender);
         setSpinner(main_SPN_interested,interested);
@@ -98,23 +64,27 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
             public void onClick(View view) {
                 // collect all data and send it to the next page
                 String[] userDetails = {
-                        editTextTextEmailAddress.getText().toString(),
-                        editTextTextPassword.getText().toString(),
-                        editTextTextPersonName2.getText().toString(),
-                        editTextTextPersonName.getText().toString(),
+                        editTextEmail.getText().toString(),
+                        editTextFirstName.getText().toString(),
+                        editTextLastName.getText().toString(),
                         main_LBL_date.getText().toString(),
                         main_SPN_gender.getSelectedItem().toString(),
                         main_SPN_interested.getSelectedItem().toString(),
-                        main_EDT_occupation.getText().toString()
+                        editTextOccupation.getText().toString(),
+                        editBio.getText().toString()
                 };
 
                 getUser();
+                if (!checkIfEmpty()) {
+                    error.setText("Fill out the Required details");
+                    error.setVisibility(View.VISIBLE);
 
-                if(!isExist) {
+                } else if(!isExist) {
                     Intent intent = new Intent(RegistrationMainActivity.this, RegistrationArtistsActivity.class);
                     intent.putExtra("userDetails",userDetails);
                     startActivity(intent);
                 } else {
+                    error.setText("User email exists on system. Try again!");
                     error.setVisibility(View.VISIBLE);
                 }
             }
@@ -124,7 +94,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + editTextTextEmailAddress.getText().toString();
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + editTextEmail.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -152,21 +122,18 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
         queue.add(request);
     }
 
-
     private boolean checkIfEmpty() {
         boolean isFull = false;
-        if(editTextTextEmailAddress.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
-        }else if(editTextTextPassword.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
-        }else if(editTextTextPersonName2.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
-        }else if(editTextTextPersonName.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter second name", Toast.LENGTH_SHORT).show();
-        }else if(editTextPhone.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
-        }else if(editTextTextPostalAddress.getText().toString().equals("")){
-            Toast.makeText(this, "Please enter address", Toast.LENGTH_SHORT).show();
+        if(editTextEmail.getText().toString().equals("")){
+            //Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+        }else if(editTextFirstName.getText().toString().equals("")){
+            //Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
+        }else if(editTextLastName.getText().toString().equals("")){
+            //Toast.makeText(this, "Please enter second name", Toast.LENGTH_SHORT).show();
+        }else if(editTextOccupation.getText().toString().equals("")){
+            //Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
+        }else if(main_LBL_date.getText().toString().equals("")){
+            //Toast.makeText(this, "Please enter address", Toast.LENGTH_SHORT).show();
         }else{
             isFull = true;
         }
@@ -200,9 +167,11 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                 if(position == 0){
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
+                    tv.setTypeface(type2);
                 }
                 else {
                     tv.setTextColor(Color.BLACK);
+                    tv.setTypeface(type2);
                 }
                 return view;
             }
@@ -213,7 +182,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
     }
 
     private void setDatePicker() {
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+        main_LBL_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
@@ -236,9 +205,38 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = month + "/" + day + "/" + year;
-                mDisplayDate.setText(date);
+                main_LBL_date.setTypeface(type2);
+                main_LBL_date.setText("Birth Date: "+date);
             }
         };
+    }
+
+    private void setFonts() {
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Momcake-Bold.otf");
+        type2 = Typeface.createFromAsset(getAssets(),"fonts/Rounded.ttf");
+        editTextEmail.setTypeface(type2);
+        editTextFirstName.setTypeface(type2);
+        editTextLastName.setTypeface(type2);
+        editBio.setTypeface(type2);
+        editTextOccupation.setTypeface(type2);
+
+    }
+
+    private void findViews() {
+
+        main_SPN_gender = findViewById(R.id.main_SPN_gender);
+        main_SPN_gender.setOnItemSelectedListener(this);
+        main_SPN_interested = findViewById(R.id.main_SPN_interested);
+        main_SPN_interested.setOnItemSelectedListener(this);
+        Registration= findViewById(R.id.Registration);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.editTextLastName);
+        main_LBL_date= findViewById(R.id.main_LBL_date);
+        editTextOccupation =findViewById(R.id.editTextoccupation);
+        main_BTN_next = findViewById(R.id.main_BTN_next);
+        error = findViewById(R.id.error);
+        editBio=findViewById(R.id.editBio);
     }
 
     @Override

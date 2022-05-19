@@ -25,34 +25,13 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
-        chats_LST_chats = findViewById(R.id.chats_LST_chats);
-        bottomNavigationView=findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.chats);
-        bottomNavigationView.setItemIconSize(70);
-
-
-
+        findviews();
         initNavigation();
-
-        ArrayList<Chat> chats = new ArrayList<>();
-        chats.add(new Chat());
-        chats.add(new Chat());
-        chats.add(new Chat());
-        chats.add(new Chat());
-        chats.add(new Chat());
-        chats.add(new Chat());
-        chats.add(new Chat());
-
-
-        ChatAdapter chatAdapter = new ChatAdapter(this, chats);
-        chats_LST_chats.setLayoutManager(new LinearLayoutManager(this));
-        chats_LST_chats.setHasFixedSize(true);
-        chats_LST_chats.setAdapter(chatAdapter);
+        setChats();
     }
 
     private void initNavigation() {
         // Perform item selected listener
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,17 +46,36 @@ public class ChatsActivity extends AppCompatActivity {
                     case R.id.chats:
                         //stay in this activity
                         return true;
-
                     case R.id.person:
                         //move to profile activity
                         startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
                         //overridePendingTransition(0,0);
                         return true;
-
                 }
                 return false;
             }
         });
+    }
 
+    private void setChats() {
+        ArrayList<Chat> chats = new ArrayList<>();
+        chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+        chats.add(new Chat());
+        ChatAdapter chatAdapter = new ChatAdapter(this, chats);
+        chats_LST_chats.setLayoutManager(new LinearLayoutManager(this));
+        chats_LST_chats.setHasFixedSize(true);
+        chats_LST_chats.setAdapter(chatAdapter);
+    }
+
+    private void findviews() {
+        chats_LST_chats = findViewById(R.id.chats_LST_chats);
+        bottomNavigationView=findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.chats);
+        bottomNavigationView.setItemIconSize(70);
     }
 }

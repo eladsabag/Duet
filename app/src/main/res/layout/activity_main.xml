@@ -28,7 +28,7 @@
 
             android:text="Duet"
             android:textColor="@color/black"
-            android:textSize="45dp"
+            android:textSize="50dp"
             android:textStyle="bold"
             android:typeface="serif" />
 
@@ -51,7 +51,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="15dp"
             android:drawableRight="@drawable/ic_open_mail"
 
@@ -117,19 +117,21 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="Don't have an account? create your account."
-            android:textSize="12dp" />
+            android:textSize="15dp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_LBL_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="75dp"
-            android:gravity="center"
             android:drawableStart="@drawable/ic_error"
+            android:gravity="center"
             android:text="Wrong details. Please try again!"
             android:textColor="#FF0000"
             android:textSize="15sp"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
+
+
 
 
     </LinearLayout>
