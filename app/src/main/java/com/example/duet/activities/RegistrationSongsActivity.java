@@ -74,10 +74,9 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 // TODO -  this button should be disabled if the string array(songs chosen) is smaller than 1
 
                 // this is data from last activity - RegistrationMainActivity
-                //createNewUser();
-                //createUserDetails();
+                createNewUser();
+                createUserDetails();
                 // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
-
                 Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
                 startActivity(intent);
                 finish();
@@ -115,7 +114,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private void makeUser() {
         user = new User();
         user.setEmail(userDetails[0]);
-        user.setUsername(userDetails[2]);
+        user.setUsername(userDetails[1]);
         user.setAvatar("img");
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
@@ -135,9 +134,9 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 "        \"birthdate\":\""+userDetails[3]+"\",\n" +
                 "        \"gender\":\""+userDetails[4]+"\",\n" +
                 "        \"interestedin\":\""+userDetails[5]+"\",\n" +
-                "        \"occupation\":\""+userDetails[6]+"\"\n" +
-                "        \"bio\":\""+userDetails[7]+"\"\n" +
-                "        \"chosenArtists\":\""+chosenArtists+"\"\n" +
+                "        \"occupation\":\""+userDetails[6]+"\",\n" +
+                "        \"bio\":\""+userDetails[7]+"\",\n" +
+                "        \"chosenArtists\":\""+chosenArtists+"\",\n" +
                 "        \"chosenArtists\":\""+song.toString()+"\"\n" +
                 "    }\n" +
                 "\n" +
@@ -166,7 +165,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.103:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -207,7 +206,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.103:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

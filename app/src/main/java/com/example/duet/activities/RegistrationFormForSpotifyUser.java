@@ -112,7 +112,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.103:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -191,7 +191,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.103:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -67,12 +68,13 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                         editTextEmail.getText().toString(),
                         editTextFirstName.getText().toString(),
                         editTextLastName.getText().toString(),
-                        main_LBL_date.getText().toString(),
+                        main_LBL_date.getText().toString().substring(12),
                         main_SPN_gender.getSelectedItem().toString(),
                         main_SPN_interested.getSelectedItem().toString(),
                         editTextOccupation.getText().toString(),
                         editBio.getText().toString()
                 };
+                Log.d("ccc","date "+main_LBL_date.getText().toString().substring(12));
 
                 getUser();
                 if (!checkIfEmpty()) {

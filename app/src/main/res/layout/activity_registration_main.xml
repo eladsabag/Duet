@@ -120,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
+                android:padding="8dp"
                 android:text="Select Birth Date"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -131,6 +132,7 @@
                 android:id="@+id/main_SPN_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_marginStart="-3dp" />
 
 
@@ -138,6 +140,7 @@
                 android:id="@+id/main_SPN_interested"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_marginStart="-3dp" />
 
 
