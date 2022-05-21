@@ -214,7 +214,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="8dp"
                 android:backgroundTint="#FFE3E7"
                 android:text="Next"
                 android:textColor="@color/black"
