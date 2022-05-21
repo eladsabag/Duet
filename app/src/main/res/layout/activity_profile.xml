@@ -259,7 +259,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:text="Intrested In:"/>
+                            android:text="Interested In:"/>
                         <EditText
                             android:id="@+id/intrestedInfo"
                             android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:text="Occupation"/>
+                            android:text="Occupation:"/>
                         <EditText
                             android:id="@+id/occupationInfo"
                             android:layout_width="match_parent"

@@ -153,18 +153,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void createJson() {
+        String[] name = nameInfo.getText().toString().split(" ");
+        String first = name[0];
+        String last = name[1];
         jsonDetails="{\n" +
-                "    \"name\":\""+email+"\",\n" +
-                "    \"type\":\"profile\",\n" +
-                "    \"createdBy\":{\n" +
-                "        \"userId\":{\n" +
-                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
-                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
-                "        }\n" +
-                "    },\n" +
                 "    \"instanceAttributes\":{\n" +
-                "        \"firstname\":\""+nameInfo.getText()+"\",\n" +
-                "        \"lastname\":\""+nameInfo.getText()+"\",\n" +
+                "        \"firstname\":\""+first+"\",\n" +
+                "        \"lastname\":\""+last+"\",\n" +
                 "        \"birthdate\":\""+birthdateInfo.getText()+"\",\n" +
                 "        \"gender\":\""+genderInfo.getText()+"\",\n" +
                 "        \"interestedin\":\""+intrestedInfo.getText()+"\",\n" +
@@ -173,7 +168,6 @@ public class ProfileActivity extends AppCompatActivity {
                 "        \"chosenArtists\":\"\",\n" +
                 "        \"chosenArtists\":\"\"\n" +
                 "    }\n" +
-                "\n" +
                 "}";
     }
 
