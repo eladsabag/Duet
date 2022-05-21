@@ -37,7 +37,7 @@ public class MatchActivity extends AppCompatActivity {
     private TextView match_LBL_details;
     private ImageView match_IMG_img, match_IMG_like, match_IMG_dislike;
     String email;
-    boolean isSpotify = false;
+   // boolean isSpotify = false;
     User user = new User();
     int currentUser=0;
     ArrayList<User> matches;
@@ -119,7 +119,7 @@ public class MatchActivity extends AppCompatActivity {
 
     private void getUser() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        String endpoint = "http://192.168.0.106:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
         //Log.d("ccc","email = " + email);
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -133,7 +133,7 @@ public class MatchActivity extends AppCompatActivity {
                             user.setEmail(userId.getString("email"));
                             user.setUsername(respObj.getString("username"));
                             user.setRole(respObj.getString("role"));
-                            user.setAvatar();
+                            user.setAvatar("gg");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -167,16 +167,19 @@ public class MatchActivity extends AppCompatActivity {
 
                     case R.id.chats:
                         //move to chat activity
-                        startActivity(new Intent(getApplicationContext(),ChatsActivity.class));
-                        //overridePendingTransition(0,0);
+                        Intent chats=new Intent(getApplicationContext(),MatchActivity.class);
+                        chats.putExtra("email",email);
+                        startActivity(chats);
+                        finish();
                         return true;
 
                     case R.id.person:
                         //move to profile activity
                         Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
                         profile.putExtra("email",email);
-                        profile.putExtra("spotify",isSpotify);
+                        //profile.putExtra("spotify",isSpotify);
                         startActivity(profile);
+                        finish();
                         //overridePendingTransition(0,0);
                         return true;
 

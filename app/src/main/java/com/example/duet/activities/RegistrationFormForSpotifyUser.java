@@ -68,14 +68,14 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_form_for_spotify_user);
-        getSpotifyUser();
+        email=getIntent().getStringExtra("email");
+        //chosenArtists=getIntent().getStringArrayExtra("");
+        //getSpotifyUser();
         findViews();
         setFonts();
         setDatePicker();
         setSpinner(main_SPN_gender,gender);
         setSpinner(main_SPN_interested,interested);
-
-        //for getting the users mail
 
         main_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +84,13 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         email,
                         editTextFirstName.getText().toString(),
                         editTextLastName.getText().toString(),
-                        main_LBL_date.getText().toString(),
+                        main_LBL_date.getText().toString().substring(12),
                         main_SPN_gender.getSelectedItem().toString(),
                         main_SPN_interested.getSelectedItem().toString(),
                         editTextOccupation.getText().toString(),
                         editBio.getText().toString()
                 };
+                Log.d("dtttt",userDetails+"");
                 makeUser();
 
                 if (!checkIfEmpty()) {
@@ -112,7 +113,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        String endpoint = "http://192.168.0.106:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -122,7 +123,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Log.d("createUserDetails",""+respObj.toString());
+                          //  Log.d("createUserDetails",""+respObj.toString());
 
                         } catch (JSONException e) {
                             Log.d("createUserDetails",""+e.toString());
@@ -134,9 +135,9 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
                 //TODO:tell the user if email already in the system
-                Toast.makeText(RegistrationFormForSpotifyUser.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("createUserDetails",""+jsonDetails.toString());
-                Log.d("createUserDetails",""+error.toString());
+                //Toast.makeText(RegistrationFormForSpotifyUser.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
+              //  Log.d("createUserDetails",""+jsonDetails.toString());
+               // Log.d("createUserDetails",""+error.toString());
             }
         }) {
             @Override
@@ -160,7 +161,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         user = new User();
         user.setEmail(userDetails[0]);
         user.setUsername(userDetails[2]);
-        user.setAvatar();
+        user.setAvatar("hh");
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
@@ -181,7 +182,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 "        \"interestedin\":\""+userDetails[5]+"\",\n" +
                 "        \"occupation\":\""+userDetails[6]+"\",\n" +
                 "        \"bio\":\""+userDetails[7]+"\"\n" +
-          //      "        \"chosenArtists\":\""+chosenArtists+"\"\n" +
+         //       "        \"chosenArtists\":\""+chosenArtists+"\"\n" +
          //       "        \"chosenArtists\":\""+song.toString()+"\"\n" +
                 "    }\n" +
                 "\n" +
@@ -191,7 +192,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users";
+        String endpoint = "http://192.168.0.106:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -216,6 +217,8 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 // method to handle errors.
                 Toast.makeText(RegistrationFormForSpotifyUser.this, "user create = " + error, Toast.LENGTH_SHORT).show();
                 Log.d("ready",""+error.toString());
+                Log.d("ready",""+jsonBody);
+
             }
         }) {
             @Override
@@ -329,8 +332,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         };
     }
     private void setSpinner(Spinner spn,String[] arr) {
-
-        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.gender, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         ArrayAdapter adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, arr){
             @Override
             public boolean isEnabled(int position){

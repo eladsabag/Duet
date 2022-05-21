@@ -1,11 +1,13 @@
 package com.example.duet.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -35,8 +37,9 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
     private TextView profile_TXT_likes, profile_TXT_matches, profile_TXT_photos, EditProfile, SaveProfile, logOut;
     private EditText emailInfo , profile_TXT_bio, nameInfo, birthdateInfo, genderInfo, intrestedInfo, occupationInfo;
+    private EditText artistsInfo,songInfo;
     private BottomNavigationView bottomNavigationView;
-    private boolean isSpotify;
+    //private boolean isSpotify;
     private String email="";
     private String userId="";
     private String jsonDetails;
@@ -49,12 +52,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         findViews();
         email = getIntent().getStringExtra("email");
-        isSpotify=getIntent().getBooleanExtra("spotify",false);
-        if(isSpotify){
-            getUserDetailsFromSpotify();
-        }else {
-            getUserDetails(email);
-        }
+        //isSpotify=getIntent().getBooleanExtra("spotify",false);
+//        if(isSpotify){
+//            getUserDetailsFromSpotify();
+//        }else {
+        getUserDetails(email);
+        //}
         //setUserDetails();
         initNavigation();
         EditProfile.setOnClickListener(view -> editDetails());
@@ -63,29 +66,50 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void editDetails() {
         emailInfo.setEnabled(true);
+        emailInfo.setTextColor(Color.RED);
         nameInfo.setEnabled(true);
+        nameInfo.setTextColor(Color.RED);
         genderInfo.setEnabled(true);
+        genderInfo.setTextColor(Color.RED);
         intrestedInfo.setEnabled(true);
+        intrestedInfo.setTextColor(Color.RED);
         occupationInfo.setEnabled(true);
+        occupationInfo.setTextColor(Color.RED);
         birthdateInfo.setEnabled(true);
+        birthdateInfo.setTextColor(Color.RED);
         profile_TXT_bio.setEnabled(true);
-
+        profile_TXT_bio.setTextColor(Color.RED);
     }
 
     private void saveDetails() {
         emailInfo.setEnabled(false);
+        emailInfo.setTextColor(Color.BLACK);
         nameInfo.setEnabled(false);
+        nameInfo.setTextColor(Color.BLACK);
         genderInfo.setEnabled(false);
+        genderInfo.setTextColor(Color.BLACK);
         intrestedInfo.setEnabled(false);
+        intrestedInfo.setTextColor(Color.BLACK);
         occupationInfo.setEnabled(false);
+        occupationInfo.setTextColor(Color.BLACK);
         birthdateInfo.setEnabled(false);
+        birthdateInfo.setTextColor(Color.BLACK);
         profile_TXT_bio.setEnabled(false);
+        profile_TXT_bio.setTextColor(Color.BLACK);
         createJson();
         setUserDetails();
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+
+            }
+        });
     }
 
-    private void getUserDetailsFromSpotify() {
-    }
+//    private void getUserDetailsFromSpotify() {
+//    }
 
     private void findViews() {
         profile_TXT_likes = findViewById(R.id.profile_TXT_likes);
@@ -107,11 +131,13 @@ public class ProfileActivity extends AppCompatActivity {
         SaveProfile.setPaintFlags(SaveProfile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         logOut= findViewById(R.id.logOut);
         logOut.setPaintFlags(logOut.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        artistsInfo=findViewById(R.id.artistsInfo);
+        songInfo=findViewById(R.id.songInfo);
 
     }
     private void getUserDetails(String userEmail) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://192.168.0.106:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -120,7 +146,6 @@ public class ProfileActivity extends AppCompatActivity {
                         try {
                             //response json
                             JSONArray respObj = new JSONArray(response);
-                            Log.d("ccc"," profile instance respobj "+respObj.toString());
                             JSONObject details = respObj.getJSONObject(0);
                             JSONObject attr = details.getJSONObject("instanceAttributes");
                             JSONObject id = details.getJSONObject("instanceId");
@@ -132,6 +157,8 @@ public class ProfileActivity extends AppCompatActivity {
                             intrestedInfo.setText(attr.getString("interestedin"));
                             occupationInfo.setText(attr.getString("occupation"));
                             profile_TXT_bio.setText(attr.getString("bio"));
+                            artistsInfo.setText(attr.getString("chosenArtists"));
+                            songInfo.setText(attr.getString("chosenSong"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("ccc","catch error profile instance "+e.toString());
@@ -173,7 +200,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUserDetails() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://192.168.0.106:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.PUT, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -218,13 +245,18 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         //move to profile home
-                        startActivity(new Intent(getApplicationContext(),MatchActivity.class));
+                        Intent home=new Intent(getApplicationContext(),MatchActivity.class);
+                        home.putExtra("email",email);
+                        startActivity(home);
+                        finish();
                         return true;
 
                     case R.id.chats:
                         //move to chat activity
-                        startActivity(new Intent(getApplicationContext(),ChatsActivity.class));
-                        //overridePendingTransition(0,0);
+                        Intent chats=new Intent(getApplicationContext(),ChatsActivity.class);
+                        chats.putExtra("email",email);
+                        startActivity(chats);
+                        finish();
                         return true;
 
                     case R.id.person:

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/ic_back2"
+    android:background="@drawable/ic_back"
 
 
     tools:context=".activities.MainActivity">
@@ -58,8 +58,8 @@
 
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/black"
             android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="15dp" />
 
         <EditText
@@ -72,8 +72,8 @@
             android:drawableRight="@drawable/ic_lock"
             android:hint="Password"
             android:inputType="textPassword"
-            android:textColorHint="@color/black"
             android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="15dp" />
 
 
@@ -85,8 +85,8 @@
             android:backgroundTint="@color/black"
             android:padding="12dp"
             android:text="Login"
-            android:textSize="20dp"
             android:textColor="@color/white"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
 
@@ -119,8 +119,8 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="Don't have an account? create your account."
-            android:textSize="15dp"
-            android:textColor="#DADADA"/>
+
+            android:textSize="15dp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_LBL_error"
@@ -133,8 +133,6 @@
             android:textColor="#FF0000"
             android:textSize="15sp"
             android:visibility="invisible" />
-
-
 
 
     </LinearLayout>

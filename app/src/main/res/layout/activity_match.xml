@@ -70,14 +70,16 @@
                     android:layout_height="50dp"
                     android:src="@drawable/ic_x"
                     android:layout_weight="1"
-                    android:layout_margin="15dp"/>
+                    android:layout_margin="20dp"
+                    />
                 <ImageView
                     android:id="@+id/match_IMG_like"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_heart"
-                    android:layout_margin="15dp" />
+                    android:layout_margin="20dp"
+                    />
 
             </LinearLayout>
 

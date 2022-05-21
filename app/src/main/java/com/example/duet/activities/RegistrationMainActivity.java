@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,12 +42,14 @@ import java.util.Map;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private TextInputEditText editTextEmail, editTextFirstName, editTextLastName, editTextOccupation,editBio;
+    private EditText artistsInfo,songInfo;
     private Spinner main_SPN_gender;
     private Spinner main_SPN_interested;
     private TextView main_LBL_date,Registration,error;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String[] gender = {"Gender","Female","Male","Other"};
     private String[] interested = {"Interested In","Female","Male","Other"};
+    private String[] userDetails;
     private Typeface type2;
     private MaterialButton main_BTN_next;
     private boolean isExist = false;
@@ -64,7 +67,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
             @Override
             public void onClick(View view) {
                 // collect all data and send it to the next page
-                String[] userDetails = {
+                userDetails = new String[]{
                         editTextEmail.getText().toString(),
                         editTextFirstName.getText().toString(),
                         editTextLastName.getText().toString(),
@@ -72,8 +75,10 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                         main_SPN_gender.getSelectedItem().toString(),
                         main_SPN_interested.getSelectedItem().toString(),
                         editTextOccupation.getText().toString(),
-                        editBio.getText().toString()
+                        editBio.getText().toString(),
+
                 };
+
                 Log.d("ccc","date "+main_LBL_date.getText().toString().substring(12));
 
                 getUser();
@@ -96,7 +101,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + editTextEmail.getText().toString();
+        String endpoint = "http://192.168.0.106:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + editTextEmail.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -143,10 +148,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
     }
 
     private void setSpinner(Spinner spn,String[] arr) {
-
-
-
-        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.gender, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         ArrayAdapter adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, arr){
             @Override
             public boolean isEnabled(int position){
@@ -239,6 +240,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
         main_BTN_next = findViewById(R.id.main_BTN_next);
         error = findViewById(R.id.error);
         editBio=findViewById(R.id.editBio);
+
     }
 
     @Override

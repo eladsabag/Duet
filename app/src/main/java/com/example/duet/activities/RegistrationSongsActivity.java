@@ -62,6 +62,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(songs_EDT_artistname.getText().toString().length() != 0 && songs_EDT_song.getText().toString().length() != 0) {
+
                     makeSong();
                     makeUser();
                     createNewUser();
@@ -95,7 +96,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         user = new User();
         user.setEmail(userDetails[0]);
         user.setUsername(userDetails[1]);
-        user.setAvatar();
+        user.setAvatar("hh");
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
@@ -129,7 +130,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users";
+        String endpoint = "http://192.168.0.106:8085/iob/users";
         Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
@@ -170,7 +171,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        String endpoint = "http://192.168.0.106:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

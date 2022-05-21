@@ -51,30 +51,31 @@ public class User {
         return avatar;
     }
 
-    public User setAvatar() {
-        // TODO - get user gender male or female...
-        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("male/"+username+".png");
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        // display the image data in a ImageView or save it
-                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
-                        avatar = bmp.toString();
-//                        imageView.setImageBitmap(bmp);
-                    } else {
-                        // TODO
-                    }
-                } else {
-                    // TODO
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) { }
-        });
-        return this;
+    public void setAvatar(String j) {
+//        // TODO - get user gender male or female...
+//        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("male/"+username+".png");
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                if (response.isSuccessful()) {
+//                    if (response.body() != null) {
+//                        // display the image data in a ImageView or save it
+//                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
+//                        avatar = bmp.toString();
+////                        imageView.setImageBitmap(bmp);
+//                    } else {
+//                        // TODO
+//                    }
+//                } else {
+//                    // TODO
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) { }
+//        });
+//        return this;
+        avatar=j;
     }
 
     public String getRole() {

@@ -52,12 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
         User user = new User()
                 .setEmail("email@gmail.com")
-                .setUsername("elad")
-                .setAvatar();
+                .setUsername("elad");
 
         findViews();
-
         initViews();
+
+        main_BTN_spotify.setOnClickListener(view -> spotifyLogin());
+
+        main_BTN_login.setOnClickListener(e -> {
+            getUser();
+        });
     }
 
     private void initViews() {
@@ -93,13 +97,6 @@ public class MainActivity extends AppCompatActivity {
         ForegroundColorSpan fgcs=new ForegroundColorSpan(Color.RED);
         ss1.setSpan(fgcs,23,main_LBL_create.getText().length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         main_LBL_create.setText(ss1);
-
-
-        main_BTN_spotify.setOnClickListener(view -> spotifyLogin());
-
-        main_BTN_login.setOnClickListener(e -> {
-            getUser();
-        });
     }
 
     private void findViews() {
@@ -116,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
+        String endpoint = "http://192.168.0.106:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -128,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, MatchActivity.class);
                             intent.putExtra("email",main_EDT_username.getText().toString());
                             startActivity(intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -150,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void spotifyLogin() {
         Intent intent = new Intent(MainActivity.this, SpotifyAuthActivity.class);
-        intent.putExtra("spotify",true);
+        //intent.putExtra("spotify",true);
         startActivity(intent);
+        finish();
     }
 }
