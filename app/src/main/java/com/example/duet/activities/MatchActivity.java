@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.example.duet.data.User;
+import com.example.duet.data.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
@@ -25,14 +28,19 @@ import com.google.android.material.textview.MaterialTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MatchActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
-    private MaterialTextView match_LBL_profile;
+    private MaterialTextView match_LBL_profile,match_LBL_job;
+    private TextView match_LBL_details;
+    private ImageView match_IMG_img, match_IMG_like, match_IMG_dislike;
     String email;
     boolean isSpotify = false;
     User user = new User();
+    int currentUser=0;
+    ArrayList<User> matches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +50,14 @@ public class MatchActivity extends AppCompatActivity {
         //isSpotify = getIntent().getBooleanExtra("spotify",false);
 
         email = getIntent().getStringExtra("email");
-
+        matches = new ArrayList<>();
 //      getSpotifyUser();
         getUser();
         initNavigation();
+        //set matches array
+        getMatches();
+        match_IMG_like.setOnClickListener(view -> setUserDetails());
+        match_IMG_dislike.setOnClickListener(view -> setUserDetails());
     }
 
     private void findViews() {
@@ -54,8 +66,28 @@ public class MatchActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.home);
         match_LBL_profile= findViewById(R.id.match_LBL_profile);
         match_LBL_profile.setPaintFlags(match_LBL_profile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        match_LBL_details = findViewById(R.id.match_LBL_details);
+        match_LBL_job = findViewById(R.id.match_LBL_job);
+        match_IMG_img = findViewById(R.id.match_IMG_img);
+        match_IMG_like = findViewById(R.id.match_IMG_like);
+        match_IMG_dislike = findViewById(R.id.match_IMG_dislike);
     }
 
+    private void getMatches() {
+        //TODO:get user list of matches
+    }
+
+    private void setUserDetails(){
+        if(currentUser < matches.size()){
+//            UserDetails ud = getUserDetails(ud);
+//            match_LBL_job.setText(ud.getOccupation());
+//            match_LBL_details.setText(ud.getFirstname()+" "+ud.getLastname()+", "+ud.getAge());
+//            match_LBL_profile.setText("To see "+ud.getFirstname()+" Profile->");
+            currentUser++;
+        }else{
+            //no more matches
+        }
+    }
 
 //    private void getSpotifyUser() {
 //        String ENDPOINT = "https://api.spotify.com/v1/me";

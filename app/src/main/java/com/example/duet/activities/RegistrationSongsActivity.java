@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RegistrationSongsActivity extends AppCompatActivity {
 
@@ -41,13 +42,12 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     //private CheckBox checkBox;
     private MaterialButton songs_BTN_finish;
-    private ArrayList<String> chosenSongs;
     private RecyclerView songs_LST_songs;
     private User user;
     private Song song;
     private String jsonBody;
     private String jsonDetails;
-    private String []userDetails;
+    private String[] userDetails;
     private String[] chosenArtists;
 
     @Override
@@ -57,13 +57,13 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         userDetails = getIntent().getStringArrayExtra("userDetails");
         chosenArtists = getIntent().getStringArrayExtra("chosenArtists");
         findViews();
-        makeUser();
 
         songs_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(songs_EDT_artistname.getText().toString().length() != 0 && songs_EDT_song.getText().toString().length() != 0) {
                     makeSong();
+                    makeUser();
                     createNewUser();
                     createUserDetails();
                     Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
@@ -80,7 +80,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private void makeSong() {
         song = new Song();
         song.setSong(songs_EDT_song.getText().toString())
-                .setArtist(songs_EDT_song.getText().toString())
+                .setArtist(songs_EDT_artistname.getText().toString())
                 .setImage("");
     }
 
@@ -88,6 +88,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         songs_EDT_song = findViewById(R.id.songs_EDT_song);
         songs_EDT_artistname = findViewById(R.id.songs_EDT_artistname);
         songs_BTN_finish = findViewById(R.id.songs_BTN_finish);
+        songs_LBL_error = findViewById(R.id.songs_LBL_error);
     }
 
     private void makeUser() {
@@ -115,16 +116,21 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 "        \"interestedin\":\""+userDetails[5]+"\",\n" +
                 "        \"occupation\":\""+userDetails[6]+"\",\n" +
                 "        \"bio\":\""+userDetails[7]+"\",\n" +
-                "        \"chosenArtists\":\""+chosenArtists+"\",\n" +
-                "        \"chosenArtists\":\""+song.toString()+"\"\n" +
+                "        \"chosenArtists\":\""+ Arrays.toString(chosenArtists) +"\",\n" +
+                "        \"chosenSong\":\""+song.toString()+"\"\n" +
                 "    }\n" +
                 "\n" +
                 "}";
+
+        Log.d("ccc","json "+jsonDetails);
+        Log.d("ccc","chosen artist "+chosenArtists.toString());
+        Log.d("ccc","chosen song "+song.toString());
     }
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String endpoint = "http://10.0.0.11:8085/iob/users";
+        Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -142,8 +148,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(RegistrationSongsActivity.this, "user create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("ccc",""+error);
+                Log.d("ccc","user create "+error);
             }
         }) {
             @Override

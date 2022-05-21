@@ -8,5 +8,5 @@ import retrofit2.http.Url;
 public interface Api {
     String BASE_URL = "https://avatars.dicebear.com/api/";
     @GET
-    Call<ResponseBody> getGender(@Url String url);
+    Call<ResponseBody> getAvatar(@Url String url);
 }

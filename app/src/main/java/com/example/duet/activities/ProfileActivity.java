@@ -166,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
                 "        \"occupation\":\""+occupationInfo.getText()+"\",\n" +
                 "        \"bio\":\""+profile_TXT_bio.getText()+"\",\n" +
                 "        \"chosenArtists\":\"\",\n" +
-                "        \"chosenArtists\":\"\"\n" +
+                "        \"chosenSong\":\"\"\n" +
                 "    }\n" +
                 "}";
     }

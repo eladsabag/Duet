@@ -3,8 +3,13 @@ package com.example.duet.data;
 public class UserDetails {
     String firstname;
     String lastname;
-    String phone;
+    String age;
+    String occupation;
     String date;
+    String gender;
+    String interested;
+    String artists;
+    String song;
 
     public String getFirstname() {
         return firstname;
@@ -24,12 +29,21 @@ public class UserDetails {
         return this;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getAge() {
+        return age;
     }
 
-    public UserDetails setPhone(String phone) {
-        this.phone = phone;
+    public UserDetails setAge(String age) {
+        this.age = age;
+        return this;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public UserDetails setOccupation(String occupation) {
+        this.occupation = occupation;
         return this;
     }
 
@@ -39,6 +53,42 @@ public class UserDetails {
 
     public UserDetails setDate(String date) {
         this.date = date;
+        return this;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public UserDetails setGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public String getInterested() {
+        return interested;
+    }
+
+    public UserDetails setInterested(String interested) {
+        this.interested = interested;
+        return this;
+    }
+
+    public String getArtists() {
+        return artists;
+    }
+
+    public UserDetails setArtists(String artists) {
+        this.artists = artists;
+        return this;
+    }
+
+    public String getSong() {
+        return song;
+    }
+
+    public UserDetails setSong(String song) {
+        this.song = song;
         return this;
     }
 }

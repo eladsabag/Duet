@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class RegistrationArtistsActivity extends AppCompatActivity {
     private TextInputEditText artists_EDT_first, artists_EDT_second, artists_EDT_third;
-    private ArrayList<String> chosenArtists;
+    private String[] chosenArtists;
     private MaterialButton artists_BTN_next;
     private MaterialTextView artists_LBL_error;
     private String[] userDetails;
@@ -25,7 +25,7 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_artists);
 
-        chosenArtists = new ArrayList<>();
+        chosenArtists = new String[3];
 
         findViews();
 
@@ -38,11 +38,11 @@ public class RegistrationArtistsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(artists_EDT_first.getText().toString().length() != 0 &&  artists_EDT_second.getText().toString().length() != 0 && artists_EDT_third.getText().toString().length() != 0) {
                     // Set artists array
-                    chosenArtists.add(artists_EDT_first.getText().toString());
-                    chosenArtists.add(artists_EDT_second.getText().toString());
-                    chosenArtists.add(artists_EDT_third.getText().toString());
+                    chosenArtists[0]= artists_EDT_first.getText().toString();
+                    chosenArtists[1]= artists_EDT_second.getText().toString();
+                    chosenArtists[2]= artists_EDT_third.getText().toString();
 
-                    // this is data from last activiy - RegistrationMainActivity
+                    // this is data from last activity - RegistrationMainActivity
                     userDetails = getIntent().getStringArrayExtra("userDetails");
 
                     // send all data to next page

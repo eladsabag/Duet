@@ -37,4 +37,9 @@ public class Song {
         this.image = image;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return song+" ,"+artist;
+    }
 }
