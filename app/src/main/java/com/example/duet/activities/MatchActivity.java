@@ -3,9 +3,7 @@ package com.example.duet.activities;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,21 +14,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.duet.MSP;
 import com.example.duet.R;
 import com.example.duet.data.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MatchActivity extends AppCompatActivity {
@@ -60,8 +54,6 @@ public class MatchActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.home);
         match_LBL_profile= findViewById(R.id.match_LBL_profile);
         match_LBL_profile.setPaintFlags(match_LBL_profile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-
     }
 
 
@@ -109,7 +101,7 @@ public class MatchActivity extends AppCompatActivity {
                             user.setEmail(userId.getString("email"));
                             user.setUsername(respObj.getString("username"));
                             user.setRole(respObj.getString("role"));
-                            user.setAvatar(respObj.getString("avatar"));
+                            user.setAvatar();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

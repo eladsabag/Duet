@@ -37,6 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/black"
+                android:hint="Email"
+                android:textColorHint="#9A9A9A"
                 app:helperText="Required*"
                 app:helperTextTextColor="@color/red">
 
@@ -46,9 +48,8 @@
                     android:layout_height="match_parent"
                     android:drawableRight="@drawable/ic_open_mail"
                     android:ems="10"
-                    android:hint="Email"
+                    android:textColor="@color/black"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="@color/black"
                     android:textSize="18dp" />
 
 
@@ -59,6 +60,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Password"
+                android:textColorHint="#9A9A9A"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -68,9 +71,8 @@
                     android:layout_height="match_parent"
                     android:drawableRight="@drawable/ic_lock"
                     android:ems="10"
-                    android:hint="Password"
+                    android:textColor="@color/black"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/black"
                     android:textSize="18dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,6 +82,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:textColorHint="#9A9A9A"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -88,9 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="First Name"
                     android:inputType="textPersonName"
-                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
                     android:textSize="18dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +102,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:textColorHint="#9A9A9A"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -107,9 +112,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="Last Name"
+                    android:textColor="@color/black"
                     android:inputType="textPersonName"
-                    android:textColorHint="@color/black"
                     android:textSize="18dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -148,6 +152,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Occupation"
+                android:textColorHint="#9A9A9A"
                 app:boxStrokeColor="@color/black"
                 app:helperTextTextColor="@color/black">
 
@@ -156,9 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="Occupation"
                     android:inputType="text"
-                    android:textColorHint="@color/black"
                     android:textSize="18dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,6 +177,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Tell about yourself"
+                    android:textColorHint="#9A9A9A"
                     app:boxStrokeColor="@color/black"
                     app:helperTextTextColor="@color/black">
 
@@ -181,9 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ems="10"
-                        android:hint="Tell about yourself"
                         android:inputType="text"
-                        android:textColorHint="@color/black"
                         android:textSize="18dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -202,25 +206,26 @@
                 android:textSize="15sp"
                 android:visibility="invisible" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_BTN_next"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:backgroundTint="#FFE3E7"
+                android:text="Next"
+                android:textColor="@color/black"
+                app:cornerRadius="30dp"
+                app:strokeColor="#FE3B5B"
+                app:strokeWidth="4dp" />
+
         </LinearLayout>
     </ScrollView>
 
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/main_BTN_next"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:backgroundTint="#FFE3E7"
-        android:text="Next"
-        android:textColor="@color/black"
-        app:cornerRadius="30dp"
-        app:strokeColor="#FE3B5B"
-        app:strokeWidth="4dp" />
 
 
 </RelativeLayout>

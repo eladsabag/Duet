@@ -43,377 +43,123 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:orientation="vertical"
                 >
 
-                <LinearLayout
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_artist"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="1st artist"                    android:textColorHint="#9A9A9A"
+                    app:boxStrokeColor="@color/black"
+                    app:helperTextTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/artists_EDT_first"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="35dp"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:inputType="textPassword"
+                        android:textSize="18dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="2nd artist"                    android:textColorHint="#9A9A9A"
+                    app:boxStrokeColor="@color/black"
+                    app:helperTextTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/artists_EDT_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="35dp"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:inputType="textPassword"
+                        android:textSize="18dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="3rd artist"                    android:textColorHint="#9A9A9A"
+                    app:boxStrokeColor="@color/black"
+                    app:helperTextTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/artists_EDT_third"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="35dp"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:inputType="textPassword"
+                        android:textSize="18dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/artists_LBL_error"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:layout_marginTop="75dp"
+                    android:drawableStart="@drawable/ic_error"
+                    android:layout_gravity="center"
+                    android:text="3 artists names are required. Please try again!"
+                    android:textColor="#FF0000"
+                    android:textSize="15sp"
+                    android:visibility="invisible" />
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist0"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Maluma"
-                        android:onClick="onCheckboxClicked"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/artists_BTN_next"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist1"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Arctic Monkey's"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist2"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Omer Adam"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist3"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Ravid Plotnik"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist4"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Kendrick Lemar"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist5"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Beyonce"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist6"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Drake"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist7"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Bad Bunny"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist8"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Noa Kirel"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="15sp"
-
-                        app:cardCornerRadius="200dp">
-
-                        <ImageView
-                            android:id="@+id/artists_IMG_artist9"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_background" />
-                    </androidx.cardview.widget.CardView>
-
-                    <CheckBox
-                        android:id="@+id/artists_BOX_artist9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="9dp"
-                        android:text="Ariana Grande"
-                        android:onClick="onCheckboxClicked"
-                        />
-                </LinearLayout>
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="#FFE3E7"
+                    android:text="Next"
+                    android:textColor="@color/black"
+                    app:cornerRadius="30dp"
+                    app:strokeColor="#FE3B5B"
+                    app:strokeWidth="4dp" />
 
             </LinearLayout>
 
 
         </LinearLayout>
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/artists_BTN_next"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="#FFE3E7"
-            android:text="Next"
-            android:textColor="@color/black"
-            app:cornerRadius="30dp"
-            app:strokeColor="#FE3B5B"
-            app:strokeWidth="4dp" />
 
     </RelativeLayout>
 

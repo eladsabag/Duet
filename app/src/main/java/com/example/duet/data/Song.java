@@ -4,7 +4,6 @@ public class Song {
     private String song;
     private String artist;
     private String image;
-    private boolean selected = false;
 
     public Song() {
         this.song = "";
@@ -36,15 +35,6 @@ public class Song {
 
     public Song setImage(String image) {
         this.image = image;
-        return this;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public Song setSelected(boolean selected) {
-        this.selected = selected;
         return this;
     }
 }

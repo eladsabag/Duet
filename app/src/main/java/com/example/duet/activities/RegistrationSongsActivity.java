@@ -1,17 +1,14 @@
 package com.example.duet.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,14 +16,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.example.duet.data.Song;
-import com.example.duet.SongAdapter;
 import com.example.duet.data.User;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,10 +35,10 @@ import java.util.ArrayList;
 
 public class RegistrationSongsActivity extends AppCompatActivity {
 
-    private TextView songs_LBL_trackName;
-    private ImageView songs_IMG_image;
-    private TextView songs_LBL_artistName;
     private TextView text;
+    private TextInputEditText songs_EDT_song, songs_EDT_artistname;
+    private MaterialTextView songs_LBL_error;
+
     //private CheckBox checkBox;
     private MaterialButton songs_BTN_finish;
     private ArrayList<String> chosenSongs;
@@ -60,26 +57,21 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         userDetails = getIntent().getStringArrayExtra("userDetails");
         chosenArtists = getIntent().getStringArrayExtra("chosenArtists");
         findViews();
-        makeSong();
         makeUser();
-
-
-
-
-        // TODO -  GET REQUEST to Spotify API for the top 10 songs worldwide right now.
 
         songs_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO -  this button should be disabled if the string array(songs chosen) is smaller than 1
-
-                // this is data from last activity - RegistrationMainActivity
-                createNewUser();
-                createUserDetails();
-                // TODO - in here we will need to direct the user to the app page with all the matches and profiles, but only if the user finished registration.
-                Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
-                startActivity(intent);
-                finish();
+                if(songs_EDT_artistname.getText().toString().length() != 0 && songs_EDT_song.getText().toString().length() != 0) {
+                    makeSong();
+                    createNewUser();
+                    createUserDetails();
+                    Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    songs_LBL_error.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -87,35 +79,22 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void makeSong() {
         song = new Song();
-        song.setSong("Envolver");
-        song.setArtist("Anitta");
-        song.setImage("https://i.scdn.co/image/ab67616d0000b2739a508628257cebd4539116cc");
-
-        ArrayList<Song> songs = new ArrayList<>();
-        songs.add(song);
-        SongAdapter songAdapter = new SongAdapter(this, songs);
-        songs_LST_songs.setLayoutManager(new LinearLayoutManager(this));
-        songs_LST_songs.setHasFixedSize(true);
-        songs_LST_songs.setAdapter(songAdapter);
-        //checkBox = findViewById(R.id.checkBox);
-        //chosenSongs = new ArrayList<>();
+        song.setSong(songs_EDT_song.getText().toString())
+                .setArtist(songs_EDT_song.getText().toString())
+                .setImage("");
     }
 
     private void findViews() {
-        songs_LBL_trackName = findViewById(R.id.songs_LBL_trackName);
-        songs_LBL_artistName = findViewById(R.id.songs_LBL_artistName);
-        songs_LST_songs = findViewById(R.id.songs_LST_songs);
-        //checkBox = findViewById(R.id.checkBox);
-        songs_IMG_image = findViewById(R.id.songs_IMG_image);
+        songs_EDT_song = findViewById(R.id.songs_EDT_song);
+        songs_EDT_artistname = findViewById(R.id.songs_EDT_artistname);
         songs_BTN_finish = findViewById(R.id.songs_BTN_finish);
-
     }
 
     private void makeUser() {
         user = new User();
         user.setEmail(userDetails[0]);
         user.setUsername(userDetails[1]);
-        user.setAvatar("img");
+        user.setAvatar();
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
@@ -142,26 +121,6 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 "\n" +
                 "}";
     }
-
-//    public void onCheckboxClicked(View view) {
-//        // Is the view now checked?
-//        boolean checked = ((CheckBox) view).isChecked();
-//
-//        // Check which checkbox was clicked
-//        switch(view.getId()) {
-//            case R.id.checkBox:
-//                if (checked) {
-//                    ll1.setBackgroundColor(Color.parseColor("#5C9A4141"));
-//                    chosenSongs.add(checkBox.getText().toString());
-//                }
-//                else {
-//                    ll1.setBackgroundColor(Color.parseColor("#FFFFFF"));
-//                    chosenSongs.remove(checkBox.getText().toString());
-//                }
-//                break;
-//        }
-//    }
-
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -226,10 +185,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                //TODO:tell the user if email already in the system
                 Toast.makeText(RegistrationSongsActivity.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("ccc",""+error);
             }
         }) {
             @Override

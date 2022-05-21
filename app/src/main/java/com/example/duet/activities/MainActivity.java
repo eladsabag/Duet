@@ -10,7 +10,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -25,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
+import com.example.duet.data.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialTextView main_LBL_listen,main_LBL_orLogin;
     private EditText main_EDT_username,main_EDT_password;
     private MaterialButton main_BTN_login,main_BTN_spotify;
+
     private MaterialTextView main_LBL_error;
     private boolean isExist = false;
     private String userDetails;
@@ -48,15 +49,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        User user = new User()
+                .setEmail("email@gmail.com")
+                .setUsername("elad")
+                .setAvatar();
+
         findViews();
-        setCreateClick();
-        setFont();
-        setClickButtons();
+
+        initViews();
     }
 
-
-
-    private void setFont() {
+    private void initViews() {
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Cabinet.ttf");
         Typeface type2 = Typeface.createFromAsset(getAssets(),"fonts/Momcake-Bold.otf");
         Typeface type3 = Typeface.createFromAsset(getAssets(),"fonts/Rounded.ttf");
@@ -65,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         main_EDT_password.setTypeface(type3);
         main_LBL_create.setTypeface(type3);
         main_LBL_orLogin.setTypeface(type3);
-    }
 
-    private void setCreateClick() {
+
+
         SpannableString ss = new SpannableString(main_LBL_create.getText());
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -89,13 +93,25 @@ public class MainActivity extends AppCompatActivity {
         ForegroundColorSpan fgcs=new ForegroundColorSpan(Color.RED);
         ss1.setSpan(fgcs,23,main_LBL_create.getText().length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         main_LBL_create.setText(ss1);
-    }
 
-    private void setClickButtons() {
+
         main_BTN_spotify.setOnClickListener(view -> spotifyLogin());
+
         main_BTN_login.setOnClickListener(e -> {
             getUser();
         });
+    }
+
+    private void findViews() {
+        main_BTN_login=findViewById(R.id.main_BTN_login);
+        main_LBL_create=findViewById(R.id.main_LBL_create);
+        main_LBL_name=findViewById(R.id.main_LBL_name);
+        main_LBL_listen=findViewById(R.id.main_LBL_listen);
+        main_EDT_username=findViewById(R.id.main_EDT_username);
+        main_EDT_password=findViewById(R.id.main_EDT_password);
+        main_LBL_orLogin=findViewById(R.id.main_LBL_orLogin);
+        main_BTN_spotify=findViewById(R.id.main_BTN_spotify);
+        main_LBL_error = findViewById(R.id.main_LBL_error);
     }
 
     private void getUser(){
@@ -120,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 main_LBL_error.setVisibility(View.VISIBLE);
-            }
+                }
         }) {
             @Nullable
             @Override
@@ -131,23 +147,10 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void findViews() {
-        main_BTN_login=findViewById(R.id.main_BTN_login);
-        main_LBL_create=findViewById(R.id.main_LBL_create);
-        main_LBL_name=findViewById(R.id.main_LBL_name);
-        main_LBL_listen=findViewById(R.id.main_LBL_listen);
-        main_EDT_username=findViewById(R.id.main_EDT_username);
-        main_EDT_password=findViewById(R.id.main_EDT_password);
-        main_LBL_orLogin=findViewById(R.id.main_LBL_orLogin);
-        main_BTN_spotify=findViewById(R.id.main_BTN_spotify);
-        main_LBL_error = findViewById(R.id.main_LBL_error);
-    }
-
 
     private void spotifyLogin() {
-
         Intent intent = new Intent(MainActivity.this, SpotifyAuthActivity.class);
-        //intent.putExtra("spotify",true);
+        intent.putExtra("spotify",true);
         startActivity(intent);
     }
 }

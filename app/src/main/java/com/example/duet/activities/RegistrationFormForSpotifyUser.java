@@ -1,9 +1,5 @@
 package com.example.duet.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +15,10 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -160,7 +160,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         user = new User();
         user.setEmail(userDetails[0]);
         user.setUsername(userDetails[2]);
-        user.setAvatar("img");
+        user.setAvatar();
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
