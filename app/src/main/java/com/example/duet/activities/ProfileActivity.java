@@ -1,14 +1,18 @@
 package com.example.duet.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,9 +44,11 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView profile_TXT_likes, profile_TXT_matches, profile_TXT_photos, EditProfile, SaveProfile, logOut;
     private EditText emailInfo , profile_TXT_bio, nameInfo, birthdateInfo, genderInfo, intrestedInfo, occupationInfo;
     private EditText artistsInfo,songInfo;
+    private ImageView profile_IMG_img;
     private BottomNavigationView bottomNavigationView;
     //private boolean isSpotify;
     private String email="";
+    private String avatar="";
     private String userId="";
     private String jsonDetails;
 
@@ -52,11 +60,14 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         findViews();
         email = getIntent().getStringExtra("email");
+        avatar = getIntent().getStringExtra("avatar");
+        //Log.d("ccc","profile avatar = "+avatar);
         //isSpotify=getIntent().getBooleanExtra("spotify",false);
 //        if(isSpotify){
 //            getUserDetailsFromSpotify();
 //        }else {
         getUserDetails(email);
+        setImage(avatar);
         //}
         //setUserDetails();
         initNavigation();
@@ -133,11 +144,12 @@ public class ProfileActivity extends AppCompatActivity {
         logOut.setPaintFlags(logOut.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         artistsInfo=findViewById(R.id.artistsInfo);
         songInfo=findViewById(R.id.songInfo);
+        profile_IMG_img = findViewById(R.id.profile_IMG_img);
 
     }
     private void getUserDetails(String userEmail) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://10.0.0.11:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -200,7 +212,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUserDetails() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://10.0.0.11:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.PUT, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -267,5 +279,16 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setImage(String encodedString) {
+        Bitmap bitmap = null;
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        } catch(Exception e) {
+            e.getMessage();
+        }
+    profile_IMG_img.setImageBitmap(bitmap);
     }
 }

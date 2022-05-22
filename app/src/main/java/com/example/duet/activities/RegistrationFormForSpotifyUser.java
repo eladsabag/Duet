@@ -76,6 +76,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         setDatePicker();
         setSpinner(main_SPN_gender,gender);
         setSpinner(main_SPN_interested,interested);
+        makeUser();
 
         main_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         editBio.getText().toString()
                 };
                 Log.d("dtttt",userDetails+"");
-                makeUser();
+                makeUserDetails();
 
                 if (!checkIfEmpty()) {
                     error.setText("Fill out the Required details");
@@ -111,9 +112,35 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     }
 
+    private void makeUserDetails() {
+        Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
+        jsonBody = gson.toJson(user);
+
+        jsonDetails="{\n" +
+                "    \"name\":\""+userDetails[0]+"\",\n" +
+                "    \"type\":\"profile\",\n" +
+                "    \"createdBy\":{\n" +
+                "        \"userId\":{\n" +
+                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"instanceAttributes\":{\n" +
+                "        \"firstname\":\""+userDetails[1]+"\",\n" +
+                "        \"lastname\":\""+userDetails[2]+"\",\n" +
+                "        \"birthdate\":\""+userDetails[3]+"\",\n" +
+                "        \"gender\":\""+userDetails[4]+"\",\n" +
+                "        \"interestedin\":\""+userDetails[5]+"\",\n" +
+                "        \"occupation\":\""+userDetails[6]+"\",\n" +
+                "        \"bio\":\""+userDetails[7]+"\"\n" +
+                "    }\n" +
+                "\n" +
+                "}";
+    }
+
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -126,13 +153,14 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                           //  Log.d("createUserDetails",""+respObj.toString());
 
                         } catch (JSONException e) {
-                            Log.d("createUserDetails",""+e.toString());
+                            Log.d("createUserDetails catch",""+e.toString());
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("createUserDetails error",""+error.toString());
                 // method to handle errors.
                 //TODO:tell the user if email already in the system
                 //Toast.makeText(RegistrationFormForSpotifyUser.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
@@ -159,40 +187,15 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void makeUser() {
         user = new User();
-        user.setEmail(userDetails[0]);
-        user.setUsername(userDetails[2]);
-        user.setAvatar("hh");
-        Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
-        jsonBody = gson.toJson(user);
-
-        jsonDetails="{\n" +
-                "    \"name\":\""+userDetails[0]+"\",\n" +
-                "    \"type\":\"profile\",\n" +
-                "    \"createdBy\":{\n" +
-                "        \"userId\":{\n" +
-                "            \"domain\":\"2022b.Yaeli.Bar.Gimelshtei\",\n" +
-                "            \"email\":\"avivit.yehezkel@s.afeka.ac.il\"\n" +
-                "        }\n" +
-                "    },\n" +
-                "    \"instanceAttributes\":{\n" +
-                "        \"firstname\":\""+userDetails[1]+"\",\n" +
-                "        \"lastname\":\""+userDetails[2]+"\",\n" +
-                "        \"birthdate\":\""+userDetails[3]+"\",\n" +
-                "        \"gender\":\""+userDetails[4]+"\",\n" +
-                "        \"interestedin\":\""+userDetails[5]+"\",\n" +
-                "        \"occupation\":\""+userDetails[6]+"\",\n" +
-                "        \"bio\":\""+userDetails[7]+"\"\n" +
-         //       "        \"chosenArtists\":\""+chosenArtists+"\"\n" +
-         //       "        \"chosenArtists\":\""+song.toString()+"\"\n" +
-                "    }\n" +
-                "\n" +
-                "}";
+        user.setEmail(email);
+        user.setUsername(editTextFirstName.getText().toString());
+        user.generateAvatar();
     }
 
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

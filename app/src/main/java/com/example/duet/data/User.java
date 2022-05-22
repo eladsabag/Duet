@@ -2,13 +2,17 @@ package com.example.duet.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 
 import com.example.duet.retrofit.RetrofitClient;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
@@ -51,31 +55,37 @@ public class User {
         return avatar;
     }
 
-    public void setAvatar(String j) {
-//        // TODO - get user gender male or female...
-//        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("male/"+username+".png");
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.isSuccessful()) {
-//                    if (response.body() != null) {
-//                        // display the image data in a ImageView or save it
-//                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
-//                        avatar = bmp.toString();
-////                        imageView.setImageBitmap(bmp);
-//                    } else {
-//                        // TODO
-//                    }
-//                } else {
-//                    // TODO
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) { }
-//        });
-//        return this;
-        avatar=j;
+    public User setAvatar(String avatar){
+        this.avatar = avatar;
+        return this;
+    }
+
+    public User generateAvatar() {
+        // TODO - get user gender male or female...
+        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("male/"+username+".png");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        // display the image data in a ImageView or save it
+                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
+                        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG,100, baos);
+                        byte [] b=baos.toByteArray();
+                        avatar= Base64.encodeToString(b, Base64.DEFAULT);
+                    } else {
+                        // TODO
+                    }
+                } else {
+                    // TODO
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) { }
+        });
+        return this;
     }
 
     public String getRole() {

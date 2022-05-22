@@ -84,6 +84,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:padding="8dp"
                 android:text="Select Birth Date"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -97,7 +98,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"
+                />
 
 
             <Spinner
@@ -106,7 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"
+                />
 
 
             <com.google.android.material.textfield.TextInputLayout

@@ -3,6 +3,7 @@ package com.example.duet.activities;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.example.duet.data.User;
-import com.example.duet.data.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
@@ -119,7 +119,7 @@ public class MatchActivity extends AppCompatActivity {
 
     private void getUser() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
         //Log.d("ccc","email = " + email);
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -133,7 +133,8 @@ public class MatchActivity extends AppCompatActivity {
                             user.setEmail(userId.getString("email"));
                             user.setUsername(respObj.getString("username"));
                             user.setRole(respObj.getString("role"));
-                            user.setAvatar("gg");
+                            user.setAvatar(respObj.getString("avatar"));
+                            //Log.d("ccc","match get user "+user.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -167,7 +168,7 @@ public class MatchActivity extends AppCompatActivity {
 
                     case R.id.chats:
                         //move to chat activity
-                        Intent chats=new Intent(getApplicationContext(),MatchActivity.class);
+                        Intent chats=new Intent(getApplicationContext(),ChatsActivity.class);
                         chats.putExtra("email",email);
                         startActivity(chats);
                         finish();
@@ -177,6 +178,7 @@ public class MatchActivity extends AppCompatActivity {
                         //move to profile activity
                         Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
                         profile.putExtra("email",email);
+                        profile.putExtra("avatar",user.getAvatar());
                         //profile.putExtra("spotify",isSpotify);
                         startActivity(profile);
                         finish();

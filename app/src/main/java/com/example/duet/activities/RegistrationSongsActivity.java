@@ -31,7 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RegistrationSongsActivity extends AppCompatActivity {
@@ -57,14 +56,13 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         userDetails = getIntent().getStringArrayExtra("userDetails");
         chosenArtists = getIntent().getStringArrayExtra("chosenArtists");
         findViews();
-
+        makeUser();
         songs_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(songs_EDT_artistname.getText().toString().length() != 0 && songs_EDT_song.getText().toString().length() != 0) {
-
                     makeSong();
-                    makeUser();
+                    makeUserDetails();
                     createNewUser();
                     createUserDetails();
                     Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
@@ -78,25 +76,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     }
 
-    private void makeSong() {
-        song = new Song();
-        song.setSong(songs_EDT_song.getText().toString())
-                .setArtist(songs_EDT_artistname.getText().toString())
-                .setImage("");
-    }
-
-    private void findViews() {
-        songs_EDT_song = findViewById(R.id.songs_EDT_song);
-        songs_EDT_artistname = findViewById(R.id.songs_EDT_artistname);
-        songs_BTN_finish = findViewById(R.id.songs_BTN_finish);
-        songs_LBL_error = findViewById(R.id.songs_LBL_error);
-    }
-
-    private void makeUser() {
-        user = new User();
-        user.setEmail(userDetails[0]);
-        user.setUsername(userDetails[1]);
-        user.setAvatar("hh");
+    private void makeUserDetails() {
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
@@ -122,15 +102,32 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                 "    }\n" +
                 "\n" +
                 "}";
+    }
 
-        Log.d("ccc","json "+jsonDetails);
-        Log.d("ccc","chosen artist "+chosenArtists.toString());
-        Log.d("ccc","chosen song "+song.toString());
+    private void makeSong() {
+        song = new Song();
+        song.setSong(songs_EDT_song.getText().toString())
+                .setArtist(songs_EDT_artistname.getText().toString())
+                .setImage("");
+    }
+
+    private void findViews() {
+        songs_EDT_song = findViewById(R.id.songs_EDT_song);
+        songs_EDT_artistname = findViewById(R.id.songs_EDT_artistname);
+        songs_BTN_finish = findViewById(R.id.songs_BTN_finish);
+        songs_LBL_error = findViewById(R.id.songs_LBL_error);
+    }
+
+    private void makeUser() {
+        user = new User();
+        user.setEmail(userDetails[0]);
+        user.setUsername(userDetails[1]);
+        user.generateAvatar();
     }
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
@@ -171,7 +168,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override

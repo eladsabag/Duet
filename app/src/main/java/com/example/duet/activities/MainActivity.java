@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialTextView main_LBL_error;
     private boolean isExist = false;
     private String userDetails;
+    private User user;
 
 
     @Override
@@ -50,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        User user = new User()
+        user = new User()
                 .setEmail("email@gmail.com")
-                .setUsername("elad");
+                .setUsername("elad")
+                .generateAvatar();
 
         findViews();
         initViews();
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.106:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
