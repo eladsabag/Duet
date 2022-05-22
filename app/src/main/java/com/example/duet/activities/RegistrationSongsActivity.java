@@ -66,6 +66,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                     createNewUser();
                     createUserDetails();
                     Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
+                    intent.putExtra("email",user.getEmail());
                     startActivity(intent);
                     finish();
                 } else {
@@ -123,11 +124,12 @@ public class RegistrationSongsActivity extends AppCompatActivity {
         user.setEmail(userDetails[0]);
         user.setUsername(userDetails[1]);
         user.generateAvatar();
+
     }
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users";
+        String endpoint = "http://192.168.0.105:8085/iob/users";
         Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
@@ -168,7 +170,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        String endpoint = "http://192.168.0.105:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -181,7 +183,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                             Log.d("ccc",""+respObj.toString());
 
                         } catch (JSONException e) {
-                            Log.d("ccc",""+e.toString());
+                            Log.d("ccc","info "+e.toString());
                             e.printStackTrace();
                         }
                     }

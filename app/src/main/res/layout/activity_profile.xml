@@ -48,7 +48,7 @@
                     android:id="@+id/profile_IMG_img"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:src="@drawable/ic_x" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
@@ -124,16 +124,23 @@
 
 
 
-            <LinearLayout
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:layout_weight="1"
+
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_width="221dp"
+                    android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:id="@+id/layoutEmail"
                         android:layout_width="wrap_content"
@@ -143,21 +150,21 @@
 
                         <TextView
                             android:id="@+id/email"
-                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Email:"/>
+                            android:text="Email:"
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/emailInfo"
-                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
                             android:paddingStart="6dp"
                             android:text=""
-                            />
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
@@ -165,26 +172,27 @@
                         android:id="@+id/layoutName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutEmail"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="Name:"/>
+                            android:text="Name:"
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/nameInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
-                            />
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
 
                     </LinearLayout>
@@ -196,60 +204,62 @@
                         android:layout_below="@id/layoutName"
                         android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/birthdate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="Birth Date:"/>
+                            android:text="Birth Date:"
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/birthdateInfo"
-                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
-                            />
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutBirthdate"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal"
 
                         >
+
                         <TextView
                             android:id="@+id/gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:text="Gender:"
 
-                            android:text="Gender:"/>
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/genderInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
-                            />
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutIntrested"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutGender"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal"
 
                         >
@@ -258,20 +268,19 @@
                             android:id="@+id/intrested"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="Interested In:"/>
+                            android:text="Interested In:"
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/intrestedInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
-                            />
-
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
 
                     </LinearLayout>
@@ -281,38 +290,37 @@
                         android:id="@+id/layoutOccupation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutIntrested"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/occupation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="Occupation:"/>
+                            android:text="Occupation:"
+                            android:textColor="@color/black" />
+
                         <EditText
                             android:id="@+id/occupationInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
-                            />
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/layoutArtists"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutOccupation"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/artists"
@@ -322,29 +330,29 @@
                             android:textColor="@color/black"
 
 
-
                             />
+
                         <EditText
                             android:id="@+id/artistsInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
 
                             />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_below="@id/layoutArtists"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/song"
@@ -354,16 +362,17 @@
                             android:textColor="@color/black"
 
                             />
+
                         <EditText
                             android:id="@+id/songInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:paddingStart="6dp"
                             android:background="@null"
-                            android:textSize="16dp"
                             android:enabled="false"
+                            android:paddingStart="6dp"
                             android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
 
 
                             />
@@ -394,7 +403,7 @@
                         android:layout_marginTop="-5dp"
                         android:textSize="16dp"
                         android:enabled="false"
-                        android:text="ff"
+                        android:text=""
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -428,6 +437,7 @@
 
 
             </LinearLayout>
+            </ScrollView>
 
 
     </LinearLayout>

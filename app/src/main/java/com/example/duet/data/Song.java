@@ -40,6 +40,6 @@ public class Song {
 
     @Override
     public String toString() {
-        return song+" ,"+artist;
+        return song+" by "+artist;
     }
 }

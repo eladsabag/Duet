@@ -61,7 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
         findViews();
         email = getIntent().getStringExtra("email");
         avatar = getIntent().getStringExtra("avatar");
-        //Log.d("ccc","profile avatar = "+avatar);
+        Log.d("11111","profile email "+email);
+        Log.d("11111","profile avatar = "+avatar);
         //isSpotify=getIntent().getBooleanExtra("spotify",false);
 //        if(isSpotify){
 //            getUserDetailsFromSpotify();
@@ -90,6 +91,11 @@ public class ProfileActivity extends AppCompatActivity {
         birthdateInfo.setTextColor(Color.RED);
         profile_TXT_bio.setEnabled(true);
         profile_TXT_bio.setTextColor(Color.RED);
+        artistsInfo.setEnabled(true);
+        artistsInfo.setTextColor(Color.RED);
+        songInfo.setEnabled(true);
+        songInfo.setTextColor(Color.RED);
+
     }
 
     private void saveDetails() {
@@ -107,6 +113,10 @@ public class ProfileActivity extends AppCompatActivity {
         birthdateInfo.setTextColor(Color.BLACK);
         profile_TXT_bio.setEnabled(false);
         profile_TXT_bio.setTextColor(Color.BLACK);
+        artistsInfo.setEnabled(false);
+        artistsInfo.setTextColor(Color.BLACK);
+        songInfo.setEnabled(false);
+        songInfo.setTextColor(Color.BLACK);
         createJson();
         setUserDetails();
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     private void getUserDetails(String userEmail) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://192.168.0.105:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -160,6 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                             JSONArray respObj = new JSONArray(response);
                             JSONObject details = respObj.getJSONObject(0);
                             JSONObject attr = details.getJSONObject("instanceAttributes");
+                            Log.d("ccc","attr = "+attr);
                             JSONObject id = details.getJSONObject("instanceId");
                             userId = id.getString("id");
                             emailInfo.setText(details.getString("name"));
@@ -171,6 +182,8 @@ public class ProfileActivity extends AppCompatActivity {
                             profile_TXT_bio.setText(attr.getString("bio"));
                             artistsInfo.setText(attr.getString("chosenArtists"));
                             songInfo.setText(attr.getString("chosenSong"));
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("ccc","catch error profile instance "+e.toString());
@@ -212,7 +225,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUserDetails() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://192.168.0.105:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.PUT, endpoint,
                 new Response.Listener<String>() {
                     @Override

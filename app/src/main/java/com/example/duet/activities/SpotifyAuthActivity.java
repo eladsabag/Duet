@@ -23,6 +23,7 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +41,10 @@ public class SpotifyAuthActivity extends AppCompatActivity {
     private static final boolean SHOW_DIALOG = true;
     private static final String REDIRECT_URI = "com.example.duet://callback";
     private static final String SCOPES = "user-read-recently-played,user-library-modify,user-read-email,user-read-private";
-    //String email="";
+    private String songName="";
+    private String []chosenArtists=new String[3];
+    Intent newintent = new Intent(SpotifyAuthActivity.this, MatchActivity.class);
+
 
 
     @Override
@@ -76,6 +80,8 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                     editor.putString("token", response.getAccessToken());
                     //Log.d("STARTING", "GOT AUTH TOKEN");
                     editor.apply();
+                    getArtists();
+                    getSong();
                     startMainActivity();
                     break;
 
@@ -90,18 +96,10 @@ public class SpotifyAuthActivity extends AppCompatActivity {
             }
         }
     }
-    private void waitForUserInfo() {
-//        UserService userService = new UserService(queue, msharedPreferences);
-//        userService.get(() -> {
-//            User user = userService.getUser();
-//            editor = getSharedPreferences("SPOTIFY", 0).edit();
-//            editor.putString("userid", user.id);
-//            Log.d("STARTING", "GOT USER INFORMATION");
-//            // We use commit instead of apply because we need the information stored immediately
-//            editor.commit();
-//            startMainActivity();
-//        });
-    }
+
+
+
+
     private void startMainActivity(){
         String ENDPOINT = "https://api.spotify.com/v1/me";
         RequestQueue mqueue = Volley.newRequestQueue(this);
@@ -127,10 +125,84 @@ public class SpotifyAuthActivity extends AppCompatActivity {
         mqueue.add(jsonObjectRequest);
     }
 
+    private void getSong(){
+        String ENDPOINT = "https://api.spotify.com/v1/me/top/tracks";
+        RequestQueue mqueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
+
+            try {
+                JSONArray items=response.getJSONArray("items");
+                JSONObject song=items.getJSONObject(Integer.parseInt("0"));
+                JSONArray artists=song.getJSONArray("artists");
+                JSONObject artist1=artists.getJSONObject(Integer.parseInt("0"));
+                String artistName=artist1.getString("name");
+                songName=song.getString("name")+" by "+artistName;
+
+
+                //Log.d("getArtists",chosenArtists[0]+"");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = MSP.getMe().getString("token","");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                return headers;
+            }
+        };
+        mqueue.add(jsonObjectRequest);
+    }
+
+    private void getArtists(){
+        String ENDPOINT = "https://api.spotify.com/v1/me/top/artists";
+        RequestQueue mqueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
+
+            try {
+                JSONArray items=response.getJSONArray("items");
+                JSONObject artist1=items.getJSONObject(Integer.parseInt("0"));
+                String artistName1=artist1.getString("name");
+                JSONObject artist2=items.getJSONObject(Integer.parseInt("1"));
+                String artistName2=artist2.getString("name");
+                JSONObject artist3=items.getJSONObject(Integer.parseInt("2"));
+                String artistName3=artist3.getString("name");
+                chosenArtists= new String[]{artistName1, artistName2, artistName3};
+
+                //Log.d("getArtists",chosenArtists[0]+"");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = MSP.getMe().getString("token","");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                return headers;
+            }
+        };
+        mqueue.add(jsonObjectRequest);
+    }
 
     private void getUser(String email) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        String endpoint = "http://192.168.0.105:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -139,7 +211,7 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Intent newintent = new Intent(SpotifyAuthActivity.this, MatchActivity.class);
+                            newintent = new Intent(SpotifyAuthActivity.this, MatchActivity.class);
                             newintent.putExtra("email",email);
                             startActivity(newintent);
                         } catch (JSONException e) {
@@ -149,8 +221,12 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Intent newintent = new Intent(SpotifyAuthActivity.this, RegistrationFormForSpotifyUser.class);
+                newintent = new Intent(SpotifyAuthActivity.this, RegistrationFormForSpotifyUser.class);
                 newintent.putExtra("email",email);
+                newintent.putExtra("chosenArtists",chosenArtists);
+                newintent.putExtra("song",songName);
+                Log.d("endall","spotify "+songName);
+
                 startActivity(newintent);
             }
         }) {
@@ -162,6 +238,21 @@ public class SpotifyAuthActivity extends AppCompatActivity {
         };
         queue.add(request);
     }
+
+
+    private void waitForUserInfo() {
+//        UserService userService = new UserService(queue, msharedPreferences);
+//        userService.get(() -> {
+//            User user = userService.getUser();
+//            editor = getSharedPreferences("SPOTIFY", 0).edit();
+//            editor.putString("userid", user.id);
+//            Log.d("STARTING", "GOT USER INFORMATION");
+//            // We use commit instead of apply because we need the information stored immediately
+//            editor.commit();
+//            startMainActivity();
+//        });
+    }
+
 
 
 

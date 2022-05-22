@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +70,9 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_form_for_spotify_user);
         email=getIntent().getStringExtra("email");
-        //chosenArtists=getIntent().getStringArrayExtra("");
+        chosenArtists=getIntent().getStringArrayExtra("chosenArtists");
+        song=getIntent().getStringExtra("song");
+
         //getSpotifyUser();
         findViews();
         setFonts();
@@ -77,7 +80,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         setSpinner(main_SPN_gender,gender);
         setSpinner(main_SPN_interested,interested);
         makeUser();
-
         main_BTN_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +94,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         editBio.getText().toString()
                 };
                 Log.d("ccc",userDetails.toString()+"");
+
                 makeUserDetails();
 
                 if (!checkIfEmpty()) {
@@ -104,6 +107,8 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
                 Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
                 intent.putExtra("email",email);
+                //intent.putExtra("chosenArtists",chosenArtists);
+                //intent.putExtra("song",song);
 
                 startActivity(intent);
                 finish();
@@ -133,7 +138,9 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 "        \"gender\":\""+userDetails[4]+"\",\n" +
                 "        \"interestedin\":\""+userDetails[5]+"\",\n" +
                 "        \"occupation\":\""+userDetails[6]+"\",\n" +
-                "        \"bio\":\""+userDetails[7]+"\"\n" +
+                "        \"bio\":\""+userDetails[7]+"\",\n" +
+                "        \"chosenArtists\":\""+ Arrays.toString(chosenArtists) +"\",\n" +
+                "        \"chosenSong\":\""+song+"\"\n" +
                 "    }\n" +
                 "\n" +
                 "}";
@@ -141,7 +148,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/instances";
+        String endpoint = "http://192.168.0.105:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -151,7 +158,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                          //  Log.d("createUserDetails",""+respObj.toString());
 
                         } catch (JSONException e) {
                             Log.d("ccc","createUserDetails catch "+e.toString());
@@ -186,6 +192,8 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         queue.add(request);
     }
 
+
+
     private void makeUser() {
         user = new User();
         user.setEmail(email);
@@ -195,7 +203,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users";
+        String endpoint = "http://192.168.0.105:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -205,12 +213,12 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Log.d("ready",""+respObj.toString());
+                            //Log.d("11111",""+respObj.toString());
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("ready",""+e.toString());
+                            //Log.d("11111",""+e.toString());
 
                         }
                     }
@@ -219,8 +227,8 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
                 Toast.makeText(RegistrationFormForSpotifyUser.this, "user create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("ready",""+error.toString());
-                Log.d("ready",""+jsonBody);
+                Log.d("11111",""+error.toString());
+                Log.d("11111",""+jsonBody);
 
             }
         }) {

@@ -10,6 +10,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
+        String endpoint = "http://192.168.0.105:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + main_EDT_username.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject respObj = new JSONObject(response);
                             Intent intent = new Intent(MainActivity.this, MatchActivity.class);
                             intent.putExtra("email",main_EDT_username.getText().toString());
+                            Log.d("main1",main_EDT_username.getText().toString());
                             startActivity(intent);
                             finish();
                         } catch (JSONException e) {
