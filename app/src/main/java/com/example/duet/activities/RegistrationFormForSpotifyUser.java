@@ -91,7 +91,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         editTextOccupation.getText().toString(),
                         editBio.getText().toString()
                 };
-                Log.d("dtttt",userDetails+"");
+                Log.d("ccc",userDetails.toString()+"");
                 makeUserDetails();
 
                 if (!checkIfEmpty()) {
@@ -113,6 +113,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
     }
 
     private void makeUserDetails() {
+        user.setUsername(editTextFirstName.getText().toString());
         Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new User.userJsonSerializer()).create();
         jsonBody = gson.toJson(user);
 
@@ -153,14 +154,14 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                           //  Log.d("createUserDetails",""+respObj.toString());
 
                         } catch (JSONException e) {
-                            Log.d("createUserDetails catch",""+e.toString());
+                            Log.d("ccc","createUserDetails catch "+e.toString());
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("createUserDetails error",""+error.toString());
+                Log.d("ccc","createUserDetails error "+error.toString());
                 // method to handle errors.
                 //TODO:tell the user if email already in the system
                 //Toast.makeText(RegistrationFormForSpotifyUser.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
@@ -188,7 +189,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
     private void makeUser() {
         user = new User();
         user.setEmail(email);
-        user.setUsername(editTextFirstName.getText().toString());
         user.generateAvatar();
     }
 
