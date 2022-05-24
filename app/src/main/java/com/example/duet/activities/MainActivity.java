@@ -46,16 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private String userDetails;
     private User user;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        user = new User()
-                .setEmail("email@gmail.com")
-                .setUsername("elad")
-                .generateAvatar();
 
         findViews();
         initViews();

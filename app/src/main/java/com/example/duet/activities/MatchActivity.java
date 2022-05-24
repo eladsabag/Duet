@@ -7,7 +7,10 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +32,6 @@ import com.example.duet.data.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -255,7 +257,12 @@ public class MatchActivity extends AppCompatActivity {
     }
 
     private void newMatch() {
-        Toast.makeText(this, "you have a new match <3", Toast.LENGTH_SHORT).show();
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.match_layout, findViewById(R.id.relativeLayout));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setView(view);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
 
