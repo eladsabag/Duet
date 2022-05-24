@@ -99,8 +99,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="10dp"
-                android:padding="8dp"
-                />
+                android:padding="8dp" />
 
 
             <Spinner
@@ -110,8 +109,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="10dp"
-                android:padding="8dp"
-                />
+                android:padding="8dp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -178,25 +176,22 @@
                 android:textSize="15sp"
                 android:visibility="invisible" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/main_BTN_finish"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="30dp"
+                android:backgroundTint="#FFE3E7"
+                android:text="Finish"
+                android:textColor="@color/black"
+                app:cornerRadius="30dp"
+                app:strokeColor="#FE3B5B"
+                app:strokeWidth="4dp" />
+
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/main_BTN_finish"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#FFE3E7"
-        android:text="Finish"
-        android:textColor="@color/black"
-        app:cornerRadius="30dp"
-        app:strokeColor="#FE3B5B"
-        app:strokeWidth="4dp" />
 
 </RelativeLayout>

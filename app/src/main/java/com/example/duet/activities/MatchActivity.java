@@ -1,12 +1,16 @@
 package com.example.duet.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
@@ -24,10 +29,13 @@ import com.example.duet.data.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -37,9 +45,10 @@ public class MatchActivity extends AppCompatActivity {
     private TextView match_LBL_details;
     private ImageView match_IMG_img, match_IMG_like, match_IMG_dislike;
     String email;
-   // boolean isSpotify = false;
     User user = new User();
-    int currentUser=0;
+    String matchBody ="";
+    String likeBody ="";
+    int next = 0;
     ArrayList<User> matches;
 
     @Override
@@ -47,18 +56,69 @@ public class MatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
         findViews();
-        //isSpotify = getIntent().getBooleanExtra("spotify",false);
-
-        email = getIntent().getStringExtra("email");
-        Log.d("11111","email "+email);
         matches = new ArrayList<>();
-//      getSpotifyUser();
-        getUser();
+        email = getIntent().getStringExtra("email");
+        Log.d("ccc","email "+email);
+        getUser(email);
         initNavigation();
-        //set matches array
+        //get match
+        createMatchJson();
         getMatches();
-        match_IMG_like.setOnClickListener(view -> setUserDetails());
+        match_IMG_like.setOnClickListener(view -> onLike());
         match_IMG_dislike.setOnClickListener(view -> setUserDetails());
+        match_LBL_profile.setOnClickListener(view -> showProfile());
+    }
+
+    private void showProfile() {
+        Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
+        profile.putExtra("email",matches.get(next-1).getEmail());
+        profile.putExtra("avatar",matches.get(next-1).getAvatar());
+        profile.putExtra("isMatchProfile",true);
+        startActivity(profile);
+    }
+
+    private void createMatchJson() {
+        matchBody = "{\n" +
+                "    \"type\": \"MATCH\",\n" +
+                "    \"instance\": {\n" +
+                "        \"instanceId\": {\n" +
+                "            \"domain\": \"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"id\": \"af96c5fc-bcce-46e1-878a-3f52159f4a69\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"invokedBy\": {\n" +
+                "        \"userId\": {\n" +
+                "            \"domain\": \"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\": \""+email+"\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}\n";
+    }
+
+    private void createLikeJson() {
+        likeBody = "{\n" +
+                "    \"type\": \"LIKE\",\n" +
+                "    \"instance\": {\n" +
+                "        \"instanceId\": {\n" +
+                "            \"domain\": \"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"id\": \"af96c5fc-bcce-46e1-878a-3f52159f4a69\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"invokedBy\": {\n" +
+                "        \"userId\": {\n" +
+                "            \"domain\": \"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\": \""+email+"\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"activityAttributes\": {\n" +
+                "        \"likeTo\": {\n" +
+                "            \"userId\": {\n" +
+                "            \"domain\": \"2022b.Yaeli.Bar.Gimelshtei\",\n" +
+                "            \"email\": \""+matches.get(next-1).getEmail()+"\"\n" +
+                "        }\n" +
+                "        }\n" +
+                "    }\n" +
+                "}\n";
     }
 
     private void findViews() {
@@ -74,53 +134,134 @@ public class MatchActivity extends AppCompatActivity {
         match_IMG_dislike = findViewById(R.id.match_IMG_dislike);
     }
 
-    private void getMatches() {
-        //TODO:get user list of matches
-    }
-
     private void setUserDetails(){
-        if(currentUser < matches.size()){
-//            UserDetails ud = getUserDetails(ud);
-//            match_LBL_job.setText(ud.getOccupation());
-//            match_LBL_details.setText(ud.getFirstname()+" "+ud.getLastname()+", "+ud.getAge());
-//            match_LBL_profile.setText("To see "+ud.getFirstname()+" Profile->");
-            currentUser++;
+        if(next < matches.size()) {
+            getUserDetails(matches.get(next).getEmail());
+            next++;
         }else{
-            //no more matches
+            Toast.makeText(this, "no more matches :(", Toast.LENGTH_SHORT).show();
         }
     }
 
-//    private void getSpotifyUser() {
-//        String ENDPOINT = "https://api.spotify.com/v1/me";
-//        RequestQueue mqueue = Volley.newRequestQueue(this);
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
-//            try {
-//                email=response.getString("email");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }, new Response.ErrorListener(){
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        }) {
-//
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> headers = new HashMap<>();
-//                String token = MSP.getMe().getString("token","");
-//                String auth = "Bearer " + token;
-//                headers.put("Authorization", auth);
-//                return headers;
-//            }
-//        };
-//        mqueue.add(jsonObjectRequest);
-//    }
+    private void onLike() {
+        createLikeJson();
+        isMatch();
+        setUserDetails();
+    }
 
 
-    private void getUser() {
+
+    private void getMatches() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        Log.d("ccc","match body "+matchBody);
+        String endpoint = "http://10.0.0.11:8085/iob/activities";
+        StringRequest request = new StringRequest(Request.Method.POST, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                        try {
+                            //response json
+                            JSONArray respObj = new JSONArray(response);
+                            for (int i =0;i<5;i++){
+                                User match = new User();
+                                JSONObject userJson = respObj.getJSONObject(i);
+                                JSONObject userId = userJson.getJSONObject("userId");
+                                match.setEmail(userId.getString("email"));
+                                match.setUsername(userJson.getString("username"));
+                                match.setRole(userJson.getString("role"));
+                                match.setAvatar(userJson.getString("avatar"));
+                                matches.add(match);
+                            }
+                            Log.d("ccc","match result 0 "+matches.get(0).getEmail());
+                            Log.d("ccc","match result 1 "+matches.get(1).getEmail());
+                            Log.d("ccc","match result 2 "+matches.get(2).getEmail());
+                            Log.d("ccc","match result 3 "+matches.get(3).getEmail());
+                            Log.d("ccc","match result 4 "+matches.get(4).getEmail());
+                            setUserDetails();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Log.d("ccc","match create "+error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return matchBody == null ? null : matchBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", matchBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+        queue.add(request);
+    }
+
+
+
+    private void isMatch() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/activities";
+        //Log.d("ccc","likebody "+ likeBody);
+        StringRequest request = new StringRequest(Request.Method.POST, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        try {
+                            //response json
+                            JSONObject respObj = new JSONObject(response);
+                            Log.d("ccc","like result "+respObj.toString());
+                            if(Boolean.parseBoolean(respObj.getString("match"))){
+                                newMatch();
+                            };
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Log.d("ccc","like create "+error);
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return likeBody == null ? null : likeBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", likeBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+        queue.add(request);
+    }
+
+    private void newMatch() {
+        Toast.makeText(this, "you have a new match <3", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void getUser(String userEmail) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + userEmail;
         //Log.d("ccc","email = " + email);
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -154,6 +295,55 @@ public class MatchActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    private void getUserDetails(String userEmail) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String endpoint = "http://10.0.0.11:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        StringRequest request = new StringRequest(Request.Method.GET, endpoint,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // on below line we are displaying a success toast message.
+                        try {
+                            //response json
+                            JSONArray respObj = new JSONArray(response);
+                            Log.d("ccc","instance "+respObj);
+                            JSONObject details = respObj.getJSONObject(0);
+                            JSONObject attr = details.getJSONObject("instanceAttributes");
+                            match_LBL_details.setText(attr.getString("firstname")+" ,"+attr.getString("birthdate"));
+                            match_LBL_job.setText(attr.getString("occupation"));
+                            setImage(matches.get(next-1).getAvatar());
+                            match_LBL_profile.setText("To see "+attr.getString("firstname")+" Profile->");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("ccc","catch error profile instance "+e.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ccc","error profile instance "+error.toString());
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+        queue.add(request);
+    }
+
+    private void setImage(String encodedString) {
+        Bitmap bitmap = null;
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        } catch(Exception e) {
+            e.getMessage();
+        }
+        match_IMG_img.setImageBitmap(bitmap);
+    }
 
     private void initNavigation() {
         // Perform item selected listener
@@ -169,10 +359,13 @@ public class MatchActivity extends AppCompatActivity {
 
                     case R.id.chats:
                         //move to chat activity
+                        //String users = new Gson().toJson(matches);
+                        //Log.d("bbb","user = " +users);
                         Intent chats=new Intent(getApplicationContext(),ChatsActivity.class);
                         chats.putExtra("email",email);
+                        //chats.putExtra("users",users);
                         startActivity(chats);
-                        finish();
+                        //finish();
                         return true;
 
                     case R.id.person:
@@ -182,7 +375,7 @@ public class MatchActivity extends AppCompatActivity {
                         profile.putExtra("avatar",user.getAvatar());
                         //profile.putExtra("spotify",isSpotify);
                         startActivity(profile);
-                        finish();
+                        //finish();
                         //overridePendingTransition(0,0);
                         return true;
 

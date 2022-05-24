@@ -62,7 +62,7 @@ public class User {
 
     public User generateAvatar() {
         // TODO - get user gender male or female...
-        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("female/"+username+".png");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().getAvatar("human/"+username+".png");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.duet.data.Chat;
 import com.example.duet.ChatAdapter;
 import com.example.duet.R;
+import com.example.duet.data.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -26,6 +30,8 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         findviews();
+        //ArrayList<User> users = new Gson().fromJson(getIntent().getStringExtra("users"), new TypeToken<User>(){}.getType());
+        //Log.d("bbb","chats "+users.get(0).getEmail());
         initNavigation();
         setChats();
     }

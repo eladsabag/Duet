@@ -41,7 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView profile_TXT_likes, profile_TXT_matches, profile_TXT_photos, EditProfile, SaveProfile, logOut;
+    private TextView profile_LBL_title,profile_TXT_likes, profile_TXT_matches, profile_TXT_photos, EditProfile, SaveProfile, logOut;
     private EditText emailInfo , profile_TXT_bio, nameInfo, birthdateInfo, genderInfo, intrestedInfo, occupationInfo;
     private EditText artistsInfo,songInfo;
     private ImageView profile_IMG_img;
@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String avatar="";
     private String userId="";
     private String jsonDetails;
+    private boolean isMatchProfile;
 
 
 
@@ -61,12 +62,14 @@ public class ProfileActivity extends AppCompatActivity {
         findViews();
         email = getIntent().getStringExtra("email");
         avatar = getIntent().getStringExtra("avatar");
+        isMatchProfile = getIntent().getBooleanExtra("isMatchProfile",false);
         Log.d("11111","profile email "+email);
         Log.d("11111","profile avatar = "+avatar);
-        //isSpotify=getIntent().getBooleanExtra("spotify",false);
-//        if(isSpotify){
-//            getUserDetailsFromSpotify();
-//        }else {
+        if(isMatchProfile){
+            EditProfile.setVisibility(View.INVISIBLE);
+            SaveProfile.setVisibility(View.INVISIBLE);
+            logOut.setVisibility(View.INVISIBLE);
+        }
         getUserDetails(email);
         setImage(avatar);
         //}
@@ -134,6 +137,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void findViews() {
         profile_TXT_likes = findViewById(R.id.profile_TXT_likes);
+        profile_LBL_title = findViewById(R.id.profile_LBL_title);
         profile_TXT_matches = findViewById(R.id.profile_TXT_matches);
         profile_TXT_photos = findViewById(R.id.profile_TXT_photos);
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
@@ -159,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     private void getUserDetails(String userEmail) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://10.0.0.11:8085/iob/instances/search/byName/" + userEmail +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -182,7 +186,9 @@ public class ProfileActivity extends AppCompatActivity {
                             profile_TXT_bio.setText(attr.getString("bio"));
                             artistsInfo.setText(attr.getString("chosenArtists"));
                             songInfo.setText(attr.getString("chosenSong"));
-
+                            if(isMatchProfile){
+                                profile_LBL_title.setText(attr.getString("firstname")+"'s Profile");
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -225,7 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUserDetails() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
+        String endpoint = "http://10.0.0.11:8085/iob/instances/2022b.Yaeli.Bar.Gimelshtei/" + userId +"?userDomain=2022b.Yaeli.Bar.Gimelshtei&userEmail=avivit.yehezkel@s.afeka.ac.il";
         StringRequest request = new StringRequest(Request.Method.PUT, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -270,9 +276,9 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         //move to profile home
-                        Intent home=new Intent(getApplicationContext(),MatchActivity.class);
-                        home.putExtra("email",email);
-                        startActivity(home);
+//                        Intent home=new Intent(getApplicationContext(),MatchActivity.class);
+//                        home.putExtra("email",email);
+//                        startActivity(home);
                         finish();
                         return true;
 

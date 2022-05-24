@@ -103,15 +103,14 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 }else {
                     createNewUser();
                     createUserDetails();
+                    Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
+                    intent.putExtra("email",email);
+                    //intent.putExtra("chosenArtists",chosenArtists);
+                    //intent.putExtra("song",song);
+
+                    startActivity(intent);
+                    finish();
                 }
-
-                Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
-                intent.putExtra("email",email);
-                //intent.putExtra("chosenArtists",chosenArtists);
-                //intent.putExtra("song",song);
-
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -148,7 +147,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -158,7 +157,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-
                         } catch (JSONException e) {
                             Log.d("ccc","createUserDetails catch "+e.toString());
                             e.printStackTrace();
@@ -203,7 +201,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -213,12 +211,13 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
+                            Log.d("ttt",respObj.toString());
                             //Log.d("11111",""+respObj.toString());
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            //Log.d("11111",""+e.toString());
+                            Log.d("ttt","catch "+e.toString());
 
                         }
                     }
@@ -227,8 +226,8 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
                 Toast.makeText(RegistrationFormForSpotifyUser.this, "user create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("11111",""+error.toString());
-                Log.d("11111",""+jsonBody);
+                Log.d("ttt",""+error.toString());
+                Log.d("tt",""+jsonBody);
 
             }
         }) {

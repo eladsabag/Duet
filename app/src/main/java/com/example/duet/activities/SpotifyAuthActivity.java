@@ -202,7 +202,7 @@ public class SpotifyAuthActivity extends AppCompatActivity {
 
     private void getUser(String email) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
+        String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + email;
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override

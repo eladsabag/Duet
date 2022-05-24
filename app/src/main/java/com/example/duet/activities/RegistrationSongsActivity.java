@@ -129,7 +129,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/users";
+        String endpoint = "http://10.0.0.11:8085/iob/users";
         Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
@@ -170,7 +170,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
 
     private void createUserDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String endpoint = "http://192.168.0.105:8085/iob/instances";
+        String endpoint = "http://10.0.0.11:8085/iob/instances";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
