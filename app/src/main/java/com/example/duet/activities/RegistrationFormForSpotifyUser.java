@@ -100,11 +100,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                     error.setVisibility(View.VISIBLE);
                 }else {
                     createNewUser();
-                    createUserDetails();
-                    Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
-                    intent.putExtra("email",email);
-                    startActivity(intent);
-                    finish();
                 }
             }
         });
@@ -199,6 +194,11 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                             //response json
                             JSONObject respObj = new JSONObject(response);
                             Log.d("ccc","User Created Successfully!");
+                            createUserDetails();
+                            Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
+                            intent.putExtra("email",email);
+                            startActivity(intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

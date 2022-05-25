@@ -58,11 +58,6 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                     makeSong();
                     makeUserDetails();
                     createNewUser();
-                    createUserDetails();
-                    Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
-                    intent.putExtra("email",user.getEmail());
-                    startActivity(intent);
-                    finish();
                 } else {
                     songs_LBL_error.setVisibility(View.VISIBLE);
                 }
@@ -133,6 +128,11 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                             //response json
                             JSONObject respObj = new JSONObject(response);
                             Log.d("ccc","User Created Successfully!");
+                            createUserDetails();
+                            Intent intent = new Intent(RegistrationSongsActivity.this, MatchActivity.class);
+                            intent.putExtra("email",user.getEmail());
+                            startActivity(intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

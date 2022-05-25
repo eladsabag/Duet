@@ -222,7 +222,7 @@ public class MatchActivity extends AppCompatActivity {
                             JSONObject respObj = new JSONObject(response);
                             Log.d("ccc","Checking if there is a match.. ");
                             if(Boolean.parseBoolean(respObj.getString("match"))){
-                                Log.d("ccc","There is a new match between "+user.getUsername() +"And "+matches.get(next-1).getUsername());
+                                Log.d("ccc","There is a new match between "+user.getUsername() +" And "+matches.get(next-2).getUsername());
                                 newMatch();
                             };
                         } catch (JSONException e) {
