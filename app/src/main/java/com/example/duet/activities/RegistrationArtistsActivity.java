@@ -11,7 +11,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
-import java.util.ArrayList;
 
 public class RegistrationArtistsActivity extends AppCompatActivity {
     private TextInputEditText artists_EDT_first, artists_EDT_second, artists_EDT_third;

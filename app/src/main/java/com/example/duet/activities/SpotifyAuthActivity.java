@@ -32,7 +32,6 @@ import java.util.Map;
 
 public class SpotifyAuthActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
-    private SharedPreferences msharedPreferences;
 
     private RequestQueue queue;
 
@@ -51,10 +50,8 @@ public class SpotifyAuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_spotify_auth);
         authenticateSpotify();
-        msharedPreferences = this.getSharedPreferences("SPOTIFY", 0);
         queue = Volley.newRequestQueue(this);
 
     }
@@ -78,7 +75,6 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                 case TOKEN:
                     editor = getSharedPreferences("SP_FILE", 0).edit();
                     editor.putString("token", response.getAccessToken());
-                    //Log.d("STARTING", "GOT AUTH TOKEN");
                     editor.apply();
                     getArtists();
                     getSong();
@@ -87,7 +83,7 @@ public class SpotifyAuthActivity extends AppCompatActivity {
 
                 // Auth flow returned an error
                 case ERROR:
-                    Log.d("error","didn't get token");
+                    Log.d("ccc","Didn't get spotify token");
                     // Handle error response
                     break;
                 // Most likely auth flow was cancelled
@@ -137,9 +133,6 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                 JSONObject artist1=artists.getJSONObject(Integer.parseInt("0"));
                 String artistName=artist1.getString("name");
                 songName=song.getString("name")+" by "+artistName;
-
-
-                //Log.d("getArtists",chosenArtists[0]+"");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -225,8 +218,6 @@ public class SpotifyAuthActivity extends AppCompatActivity {
                 newintent.putExtra("email",email);
                 newintent.putExtra("chosenArtists",chosenArtists);
                 newintent.putExtra("song",songName);
-                Log.d("endall","spotify "+songName);
-
                 startActivity(newintent);
             }
         }) {
@@ -238,22 +229,5 @@ public class SpotifyAuthActivity extends AppCompatActivity {
         };
         queue.add(request);
     }
-
-
-    private void waitForUserInfo() {
-//        UserService userService = new UserService(queue, msharedPreferences);
-//        userService.get(() -> {
-//            User user = userService.getUser();
-//            editor = getSharedPreferences("SPOTIFY", 0).edit();
-//            editor.putString("userid", user.id);
-//            Log.d("STARTING", "GOT USER INFORMATION");
-//            // We use commit instead of apply because we need the information stored immediately
-//            editor.commit();
-//            startMainActivity();
-//        });
-    }
-
-
-
 
 }

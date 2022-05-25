@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +40,6 @@ import java.util.Map;
 
 public class RegistrationMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private TextInputEditText editTextEmail, editTextFirstName, editTextLastName, editTextOccupation,editBio;
-    private EditText artistsInfo,songInfo;
     private Spinner main_SPN_gender;
     private Spinner main_SPN_interested;
     private TextView main_LBL_date,Registration,error;
@@ -79,8 +76,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
 
                 };
 
-                Log.d("ccc","date "+main_LBL_date.getText().toString().substring(12));
-
                 getUser();
                 if (!checkIfEmpty()) {
                     error.setText("Fill out the Required details");
@@ -91,6 +86,7 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
                     intent.putExtra("userDetails",userDetails);
                     startActivity(intent);
                 } else {
+                    Log.d("ccc","User Already Exist!");
                     error.setText("User email exists on system. Try again!");
                     error.setVisibility(View.VISIBLE);
                 }
@@ -181,7 +177,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
         };
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spn.setAdapter(adapter);
-        //spn.setOnItemSelectedListener(this);
     }
 
     private void setDatePicker() {
@@ -226,7 +221,6 @@ public class RegistrationMainActivity extends AppCompatActivity implements Adapt
     }
 
     private void findViews() {
-
         main_SPN_gender = findViewById(R.id.main_SPN_gender);
         main_SPN_gender.setOnItemSelectedListener(this);
         main_SPN_interested = findViewById(R.id.main_SPN_interested);

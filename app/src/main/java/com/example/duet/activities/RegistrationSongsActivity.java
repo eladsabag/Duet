@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,13 +32,10 @@ import java.util.Arrays;
 
 public class RegistrationSongsActivity extends AppCompatActivity {
 
-    private TextView text;
     private TextInputEditText songs_EDT_song, songs_EDT_artistname;
     private MaterialTextView songs_LBL_error;
 
-    //private CheckBox checkBox;
     private MaterialButton songs_BTN_finish;
-    private RecyclerView songs_LST_songs;
     private User user;
     private Song song;
     private String jsonBody;
@@ -130,16 +124,15 @@ public class RegistrationSongsActivity extends AppCompatActivity {
     private void createNewUser(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String endpoint = "http://10.0.0.11:8085/iob/users";
-        Log.d("ccc","jsonbody "+jsonBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // on below line we are displaying a success toast message.
-                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
+                            Log.d("ccc","User Created Successfully!");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -148,7 +141,7 @@ public class RegistrationSongsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Log.d("ccc","user create "+error);
+                Log.d("ccc","Failed to create user: "+error);
             }
         }) {
             @Override
@@ -176,21 +169,19 @@ public class RegistrationSongsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // on below line we are displaying a success toast message.
-                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Log.d("ccc",""+respObj.toString());
+                            Log.d("ccc","Created User profile successfully!");
 
                         } catch (JSONException e) {
-                            Log.d("ccc","info "+e.toString());
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegistrationSongsActivity.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
+                Log.d("ccc","Failed to create user profile: "+error.toString());
             }
         }) {
             @Override

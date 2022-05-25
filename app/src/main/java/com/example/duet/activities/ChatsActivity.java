@@ -30,8 +30,6 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         findviews();
-        //ArrayList<User> users = new Gson().fromJson(getIntent().getStringExtra("users"), new TypeToken<User>(){}.getType());
-        //Log.d("bbb","chats "+users.get(0).getEmail());
         initNavigation();
         setChats();
     }
@@ -45,8 +43,7 @@ public class ChatsActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         //move to home activity
-                        startActivity(new Intent(getApplicationContext(),MatchActivity.class));
-                        //overridePendingTransition(0,0);
+                        finish();
                         return true;
 
                     case R.id.chats:
@@ -54,8 +51,11 @@ public class ChatsActivity extends AppCompatActivity {
                         return true;
                     case R.id.person:
                         //move to profile activity
-                        startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
-                        //overridePendingTransition(0,0);
+                        Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
+                        profile.putExtra("email",getIntent().getStringExtra("email"));
+                        profile.putExtra("avatar",getIntent().getStringExtra("avatar"));
+                        startActivity(profile);
+                        finish();
                         return true;
                 }
                 return false;

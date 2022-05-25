@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,8 +29,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.duet.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,14 +43,11 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText artistsInfo,songInfo;
     private ImageView profile_IMG_img;
     private BottomNavigationView bottomNavigationView;
-    //private boolean isSpotify;
     private String email="";
     private String avatar="";
     private String userId="";
     private String jsonDetails;
     private boolean isMatchProfile;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
         avatar = getIntent().getStringExtra("avatar");
         isMatchProfile = getIntent().getBooleanExtra("isMatchProfile",false);
-        Log.d("11111","profile email "+email);
-        Log.d("11111","profile avatar = "+avatar);
         if(isMatchProfile){
             EditProfile.setVisibility(View.INVISIBLE);
             SaveProfile.setVisibility(View.INVISIBLE);
@@ -72,8 +64,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         getUserDetails(email);
         setImage(avatar);
-        //}
-        //setUserDetails();
         initNavigation();
         EditProfile.setOnClickListener(view -> editDetails());
         SaveProfile.setOnClickListener(view -> saveDetails());
@@ -132,9 +122,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-//    private void getUserDetailsFromSpotify() {
-//    }
-
     private void findViews() {
         profile_TXT_likes = findViewById(R.id.profile_TXT_likes);
         profile_LBL_title = findViewById(R.id.profile_LBL_title);
@@ -168,13 +155,12 @@ public class ProfileActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
                         try {
                             //response json
+                            Log.d("ccc","Getting user details...");
                             JSONArray respObj = new JSONArray(response);
                             JSONObject details = respObj.getJSONObject(0);
                             JSONObject attr = details.getJSONObject("instanceAttributes");
-                            Log.d("ccc","attr = "+attr);
                             JSONObject id = details.getJSONObject("instanceId");
                             userId = id.getString("id");
                             emailInfo.setText(details.getString("name"));
@@ -189,16 +175,15 @@ public class ProfileActivity extends AppCompatActivity {
                             if(isMatchProfile){
                                 profile_LBL_title.setText(attr.getString("firstname")+"'s Profile");
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("ccc","catch error profile instance "+e.toString());
+                            Log.d("ccc","Entered catch - Profile instance response was invalid: "+e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ccc","error profile instance "+error.toString());
+                Log.d("ccc","Failed to get user profile instance: "+error.toString());
             }
         }) {
             @Nullable
@@ -236,19 +221,19 @@ public class ProfileActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
                         try {
                             //response json
                             JSONArray respObj = new JSONArray(response);
+                            Log.d("ccc","Profile update successful!");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("ccc","catch error profile update instance "+e.toString());
+                            Log.d("ccc","Entered catch - Profile instance update response was invalid "+e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ccc","error profile update instance "+error.toString());
+                Log.d("ccc","Failed to update profile instance: "+error.toString());
             }
         }){
             @Override
@@ -276,9 +261,6 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         //move to profile home
-//                        Intent home=new Intent(getApplicationContext(),MatchActivity.class);
-//                        home.putExtra("email",email);
-//                        startActivity(home);
                         finish();
                         return true;
 
@@ -286,13 +268,13 @@ public class ProfileActivity extends AppCompatActivity {
                         //move to chat activity
                         Intent chats=new Intent(getApplicationContext(),ChatsActivity.class);
                         chats.putExtra("email",email);
+                        chats.putExtra("avatar",avatar);
                         startActivity(chats);
                         finish();
                         return true;
 
                     case R.id.person:
                         //stay in this activity
-                        //overridePendingTransition(0,0);
                         return true;
                 }
                 return false;

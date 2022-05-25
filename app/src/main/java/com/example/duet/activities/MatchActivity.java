@@ -60,7 +60,6 @@ public class MatchActivity extends AppCompatActivity {
         findViews();
         matches = new ArrayList<>();
         email = getIntent().getStringExtra("email");
-        Log.d("ccc","email "+email);
         getUser(email);
         initNavigation();
         //get match
@@ -141,7 +140,8 @@ public class MatchActivity extends AppCompatActivity {
             getUserDetails(matches.get(next).getEmail());
             next++;
         }else{
-            Toast.makeText(this, "no more matches :(", Toast.LENGTH_SHORT).show();
+            Log.d("ccc","There is a No more matches");
+            Toast.makeText(this, "No More Matches :(", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -155,14 +155,12 @@ public class MatchActivity extends AppCompatActivity {
 
     private void getMatches() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        Log.d("ccc","match body "+matchBody);
         String endpoint = "http://10.0.0.11:8085/iob/activities";
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // on below line we are displaying a success toast message.
-                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONArray respObj = new JSONArray(response);
@@ -176,11 +174,11 @@ public class MatchActivity extends AppCompatActivity {
                                 match.setAvatar(userJson.getString("avatar"));
                                 matches.add(match);
                             }
-                            Log.d("ccc","match result 0 "+matches.get(0).getEmail());
-                            Log.d("ccc","match result 1 "+matches.get(1).getEmail());
-                            Log.d("ccc","match result 2 "+matches.get(2).getEmail());
-                            Log.d("ccc","match result 3 "+matches.get(3).getEmail());
-                            Log.d("ccc","match result 4 "+matches.get(4).getEmail());
+                            Log.d("ccc","matches result: "+matches.get(0).getEmail()
+                            +", "+matches.get(1).getEmail()
+                            +", "+matches.get(2).getEmail()
+                            +", "+matches.get(3).getEmail()
+                            +", "+matches.get(4).getEmail());
                             setUserDetails();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -190,7 +188,7 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Log.d("ccc","match create "+error);
+                Log.d("ccc","Failed to Get Matches: "+error);
             }
         }) {
             @Override
@@ -215,17 +213,16 @@ public class MatchActivity extends AppCompatActivity {
     private void isMatch() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String endpoint = "http://10.0.0.11:8085/iob/activities";
-        //Log.d("ccc","likebody "+ likeBody);
         StringRequest request = new StringRequest(Request.Method.POST, endpoint,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Log.d("ccc","like result "+respObj.toString());
+                            Log.d("ccc","Checking if there is a match.. ");
                             if(Boolean.parseBoolean(respObj.getString("match"))){
+                                Log.d("ccc","There is a new match between "+user.getUsername() +"And "+matches.get(next-1).getUsername());
                                 newMatch();
                             };
                         } catch (JSONException e) {
@@ -236,7 +233,7 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Log.d("ccc","like create "+error);
+                Log.d("ccc","Failed to check if there is a match: "+error.toString());
             }
         }) {
             @Override
@@ -269,12 +266,10 @@ public class MatchActivity extends AppCompatActivity {
     private void getUser(String userEmail) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String endpoint = "http://10.0.0.11:8085/iob/users/login/2022b.Yaeli.Bar.Gimelshtei/" + userEmail;
-        //Log.d("ccc","email = " + email);
         StringRequest request = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
@@ -283,7 +278,6 @@ public class MatchActivity extends AppCompatActivity {
                             user.setUsername(respObj.getString("username"));
                             user.setRole(respObj.getString("role"));
                             user.setAvatar(respObj.getString("avatar"));
-                            //Log.d("ccc","match get user "+user.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -309,11 +303,9 @@ public class MatchActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
                         try {
                             //response json
                             JSONArray respObj = new JSONArray(response);
-                            Log.d("ccc","instance "+respObj);
                             JSONObject details = respObj.getJSONObject(0);
                             JSONObject attr = details.getJSONObject("instanceAttributes");
                             String date = attr.getString("birthdate");
@@ -323,16 +315,16 @@ public class MatchActivity extends AppCompatActivity {
                             match_LBL_job.setText(attr.getString("occupation"));
                             setImage(matches.get(next-1).getAvatar());
                             match_LBL_profile.setText("To see "+attr.getString("firstname")+"'s Profile->");
-
+                            Log.d("ccc","Getting match details - " + attr.getString("firstname"));
                         } catch (JSONException e) {
+                            Log.d("ccc","Entered catch - match details are invalid: " + e.toString());
                             e.printStackTrace();
-                            Log.d("ccc","catch error profile instance "+e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ccc","error profile instance "+error.toString());
+                Log.d("ccc","Failed to get match details: "+error.toString());
             }
         }) {
             @Nullable
@@ -369,13 +361,10 @@ public class MatchActivity extends AppCompatActivity {
 
                     case R.id.chats:
                         //move to chat activity
-                        //String users = new Gson().toJson(matches);
-                        //Log.d("bbb","user = " +users);
                         Intent chats=new Intent(getApplicationContext(),ChatsActivity.class);
                         chats.putExtra("email",email);
-                        //chats.putExtra("users",users);
+                        chats.putExtra("avatar",user.getAvatar());
                         startActivity(chats);
-                        //finish();
                         return true;
 
                     case R.id.person:
@@ -383,10 +372,7 @@ public class MatchActivity extends AppCompatActivity {
                         Intent profile = new Intent(getApplicationContext(),ProfileActivity.class);
                         profile.putExtra("email",email);
                         profile.putExtra("avatar",user.getAvatar());
-                        //profile.putExtra("spotify",isSpotify);
                         startActivity(profile);
-                        //finish();
-                        //overridePendingTransition(0,0);
                         return true;
 
                 }

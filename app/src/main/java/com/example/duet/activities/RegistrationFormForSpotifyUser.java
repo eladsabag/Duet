@@ -93,8 +93,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                         editTextOccupation.getText().toString(),
                         editBio.getText().toString()
                 };
-                Log.d("ccc",userDetails.toString()+"");
-
                 makeUserDetails();
 
                 if (!checkIfEmpty()) {
@@ -105,9 +103,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                     createUserDetails();
                     Intent intent = new Intent(RegistrationFormForSpotifyUser.this, MatchActivity.class);
                     intent.putExtra("email",email);
-                    //intent.putExtra("chosenArtists",chosenArtists);
-                    //intent.putExtra("song",song);
-
                     startActivity(intent);
                     finish();
                 }
@@ -152,25 +147,19 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
-                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
+                            Log.d("ccc","User Profile Created Successfully!");
                         } catch (JSONException e) {
-                            Log.d("ccc","createUserDetails catch "+e.toString());
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ccc","createUserDetails error "+error.toString());
                 // method to handle errors.
-                //TODO:tell the user if email already in the system
-                //Toast.makeText(RegistrationFormForSpotifyUser.this, "instance create = " + error, Toast.LENGTH_SHORT).show();
-              //  Log.d("createUserDetails",""+jsonDetails.toString());
-               // Log.d("createUserDetails",""+error.toString());
+                Log.d("ccc","Failed to create user profile: "+error.toString());
             }
         }) {
             @Override
@@ -206,29 +195,19 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // on below line we are displaying a success toast message.
-                        //Toast.makeText(RegistrationSongsActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
                         try {
                             //response json
                             JSONObject respObj = new JSONObject(response);
-                            Log.d("ttt",respObj.toString());
-                            //Log.d("11111",""+respObj.toString());
-
-
+                            Log.d("ccc","User Created Successfully!");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("ttt","catch "+e.toString());
-
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(RegistrationFormForSpotifyUser.this, "user create = " + error, Toast.LENGTH_SHORT).show();
-                Log.d("ttt",""+error.toString());
-                Log.d("tt",""+jsonBody);
-
+                Log.d("ccc","Failed to create user: "+error);
             }
         }) {
             @Override
@@ -260,8 +239,7 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-
-
+                Log.d("ccc","Failed to get spotify user "+error.toString());
             }
         }) {
 
@@ -275,34 +253,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
             }
         };
         mqueue.add(jsonObjectRequest);
-
-
-        // TODO:ADD 3 ARTISTS AND 1 SONG FROM SPOTIFY
-//        ENDPOINT = "https://api.spotify.com/v1/me/top/artists";
-//        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
-//            try {
-//                email=response.getString("email");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }, new Response.ErrorListener(){
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        }) {
-//
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> headers = new HashMap<>();
-//                String token = MSP.getMe().getString("token","");
-//                String auth = "Bearer " + token;
-//                headers.put("Authorization", auth);
-//                return headers;
-//            }
-//        };
-//
-        //mqueue.add(jsonObjectRequest2);
-
     }
 
     private void setFonts() {
@@ -375,7 +325,6 @@ public class RegistrationFormForSpotifyUser extends AppCompatActivity implements
         };
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spn.setAdapter(adapter);
-        //spn.setOnItemSelectedListener(this);
     }
 
     private boolean checkIfEmpty() {

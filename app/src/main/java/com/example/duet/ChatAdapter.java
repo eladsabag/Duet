@@ -2,7 +2,6 @@ package com.example.duet;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("ccc", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat, parent, false);
         ChatHolder chatHolder = new ChatHolder(view);
         return chatHolder;
@@ -34,7 +32,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        Log.d("ccc", "onBindViewHolder= " + position);
         final ChatHolder holder = (ChatHolder) viewHolder;
         Chat chat = chats.get(position);
 

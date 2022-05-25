@@ -40,11 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private MaterialTextView main_LBL_listen,main_LBL_orLogin;
     private EditText main_EDT_username,main_EDT_password;
     private MaterialButton main_BTN_login,main_BTN_spotify;
-
     private MaterialTextView main_LBL_error;
     private boolean isExist = false;
-    private String userDetails;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +68,11 @@ public class MainActivity extends AppCompatActivity {
         main_LBL_create.setTypeface(type3);
         main_LBL_orLogin.setTypeface(type3);
 
-
-
         SpannableString ss = new SpannableString(main_LBL_create.getText());
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
+                Log.d("ccc","Going to Registration Page");
                 startActivity(new Intent(MainActivity.this, RegistrationMainActivity.class));
             }
             @Override
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject respObj = new JSONObject(response);
                             Intent intent = new Intent(MainActivity.this, MatchActivity.class);
                             intent.putExtra("email",main_EDT_username.getText().toString());
-                            Log.d("main1",main_EDT_username.getText().toString());
+                            Log.d("ccc","Getting User - "+main_EDT_username.getText().toString());
                             startActivity(intent);
                             finish();
                         } catch (JSONException e) {
@@ -131,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("ccc","Failed To Get User: "+error.toString());
                 main_LBL_error.setVisibility(View.VISIBLE);
                 }
         }) {
@@ -145,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void spotifyLogin() {
+        Log.d("ccc","Logging In as Spotify User");
         Intent intent = new Intent(MainActivity.this, SpotifyAuthActivity.class);
-        //intent.putExtra("spotify",true);
         startActivity(intent);
         finish();
     }
