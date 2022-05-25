@@ -36,6 +36,7 @@ import com.google.android.material.textview.MaterialTextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -223,7 +224,7 @@ public class MatchActivity extends AppCompatActivity {
                             Log.d("ccc","Checking if there is a match.. ");
                             if(Boolean.parseBoolean(respObj.getString("match"))){
                                 Log.d("ccc","There is a new match between "+user.getUsername() +" And "+matches.get(next-2).getUsername());
-                                newMatch();
+                                newMatch(matches.get(next-2).getUsername());
                             };
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -253,9 +254,11 @@ public class MatchActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void newMatch() {
+    private void newMatch(String match) {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.match_layout, findViewById(R.id.relativeLayout));
+        TextView text = view.findViewById(R.id.textView1);
+        text.setText("New Match With "+match);
         Toast toast = new Toast(getApplicationContext());
         toast.setView(view);
         toast.setGravity(Gravity.CENTER, 0, 0);

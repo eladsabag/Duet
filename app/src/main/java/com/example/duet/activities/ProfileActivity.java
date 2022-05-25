@@ -67,6 +67,14 @@ public class ProfileActivity extends AppCompatActivity {
         initNavigation();
         EditProfile.setOnClickListener(view -> editDetails());
         SaveProfile.setOnClickListener(view -> saveDetails());
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+
+            }
+        });
     }
 
     private void editDetails() {
@@ -112,14 +120,6 @@ public class ProfileActivity extends AppCompatActivity {
         songInfo.setTextColor(Color.BLACK);
         createJson();
         setUserDetails();
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                finish();
-
-            }
-        });
     }
 
     private void findViews() {

@@ -6,28 +6,28 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="New Match"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:typeface="serif"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/black">
-
-    </TextView>
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
         android:layout_margin="5dip"
-        android:src="@drawable/ic_match">
+        android:src="@drawable/ic_match"/>
 
-    </ImageView>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/imageView1"
+        android:layout_alignTop="@id/imageView1"
+        android:layout_alignRight="@id/imageView1"
+        android:layout_alignBottom="@id/imageView1"
+        android:gravity="center"
+        android:paddingBottom="90dp"
+        android:text="New Match"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
 </RelativeLayout>
