@@ -11,7 +11,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Toast Notification Type"
+        android:text="New Match"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:typeface="serif"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black">
 

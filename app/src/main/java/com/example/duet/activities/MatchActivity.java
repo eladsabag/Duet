@@ -316,10 +316,13 @@ public class MatchActivity extends AppCompatActivity {
                             Log.d("ccc","instance "+respObj);
                             JSONObject details = respObj.getJSONObject(0);
                             JSONObject attr = details.getJSONObject("instanceAttributes");
-                            match_LBL_details.setText(attr.getString("firstname")+" ,"+attr.getString("birthdate"));
+                            String date = attr.getString("birthdate");
+                            int year = Integer.parseInt(date.substring(date.length()-4));
+                            int age = 2022-year;
+                            match_LBL_details.setText(attr.getString("firstname")+" ,"+age);
                             match_LBL_job.setText(attr.getString("occupation"));
                             setImage(matches.get(next-1).getAvatar());
-                            match_LBL_profile.setText("To see "+attr.getString("firstname")+" Profile->");
+                            match_LBL_profile.setText("To see "+attr.getString("firstname")+"'s Profile->");
 
                         } catch (JSONException e) {
                             e.printStackTrace();

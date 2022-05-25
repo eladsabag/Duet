@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Ben 20"
+            android:text=""
             android:textSize="30dp"
             android:gravity="center_horizontal"
 
@@ -45,7 +45,7 @@
             android:id="@+id/match_LBL_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dancer"
+            android:text=""
             android:textSize="22dp"
             android:textColor="@color/black"
             android:gravity="center_horizontal"/>
@@ -85,7 +85,7 @@
                 android:id="@+id/match_LBL_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="To see Bens Profile->"
+                android:text="To see User's Profile->"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textSize="20dp"
